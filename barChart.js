@@ -1,13 +1,24 @@
 function drawBarChart(data) {
   var graph = [];
-  for (var i = data.length; i >= 0; i--) {
-    graph.push(data[i]);
-    graph.push("<br>");
+  for (var i = data.length; i > 0; i--) {
+    document.write("<tr>");
+    document.write("<td>"+data[i - 1]+"</td>");
+    if(data[i-1] === data[0]){
+      document.write("<td>"+"|"+"</td>");
+      document.write("<td>"+"|"+"</td>");
+      document.write("<td>"+"|"+"</td>");
+    }
+    if(data[i-1] === data[1]) {
+      document.write("<td>"+"..."+"</td>");
+      document.write("<td>"+"|"+"</td>");
+      document.write("<td>"+"|"+"</td>");
+    }
+    if(data[i-1] === data[2]) {
+      document.write("<td>"+"..."+"</td>");
+      document.write("<td>"+"..."+"</td>");
+      document.write("<td>"+"|"+"</td>");
+    }
+    document.write("</tr>");
   }
-  graph.push("+");
-  for(j = 0; j < data.length; j++) {
-    graph.push(j + 1);
-  }
-  graph = graph.join("");
   return graph;
 }

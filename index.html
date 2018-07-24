@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
-
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
   <body>
     <div id="output"></div>
-    <script src="barChart.js"></script>
-    <script>
-      document.getElementById("output").innerHTML = drawBarChart([2, 4 , 6, 8]);
-    </script>
+    <table border="solid 2px;" style="color:blue; font-size:50px;">
+      <thead><tr>
+      </thead>
+      <tbody>
+        <script src="barChart.js"></script>
+        <script>
+        data = [2, 4, 6];
+        document.getElementById("output").innerHTML = drawBarChart(data);
+        </script>
+      </tbody>
+    </table>
   </body>
 </html>
