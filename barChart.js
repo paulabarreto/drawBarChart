@@ -4,7 +4,7 @@ function drawBarChart(data, width, height) {
     document.write("<tr>");
     document.write("<th>"+data[i]+"</th>");
     for(var j = 0; j < data[i]; j++){
-      document.write("<td>"+"|"+"</td>");
+      document.write("<td>"+"&nbsp"+"</td>");
     }
     document.write("</tr>");
   }
