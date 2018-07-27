@@ -10,13 +10,12 @@ table {
 
 }
 th {
-  border: 1px solid #999;
+  transform: rotate(90deg);
 }
 td {
   background-color: #7FFFD4;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
 }
-#space {
+
+#inter {
   background-color: white;
 }
