@@ -11,8 +11,8 @@ function drawBarChart(data, width, height) {
       }
     }
 
-    document.write("<tr>");                        //Next column
-    document.write("<th>"+data[i]+"</th>");       //Tags
+    document.write("<tr id=row"+i+">");                        //Next column
+    document.write("<th>"+data[i]+"</th>");       //Labels
     for(var j = 0; j < data[i]; j++){
       document.write("<td>"+"&nbsp"+"</td>");     //Bars
     }

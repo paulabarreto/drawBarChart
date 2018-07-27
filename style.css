@@ -1,7 +1,6 @@
 table {
   margin-top: 200px;
   margin-right: 100px;
-  padding-top: 20px;
   border-collapse: collapse;
   width: 60%;
   height: 100px;
@@ -11,9 +10,8 @@ table {
 }
 th {
   transform: rotate(90deg);
-}
-td {
-  background-color: #7FFFD4;
+  background-color: white;
+  padding: 10px;
 }
 
 #inter {
