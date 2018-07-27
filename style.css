@@ -1,14 +1,22 @@
 table {
-  margin-top: 25px;
+  margin-top: 200px;
+  margin-right: 100px;
+  padding-top: 20px;
   border-collapse: collapse;
-  width: 50%;
-  height: 50px;
+  width: 60%;
+  height: 100px;
   color: #555;
+  transform: rotate(270deg);
+
 }
 th {
   border: 1px solid #999;
 }
 td {
   background-color: #7FFFD4;
+  border-top: 2px solid black;
   border-bottom: 2px solid black;
+}
+#space {
+  background-color: white;
 }
