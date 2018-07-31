@@ -1,22 +1,19 @@
-function drawBarChart(data, width, height) {
-  data.sort(function(a, b){return b - a});
-  for (var i = 0; i < data.length; i++) {
-    document.write("<tr>");                       //Number Column
-    for (var k = 0; k < data[i]; k++){
-      if(k === 0 && i === 0){
-        document.write("<td id=inter>"+"&nbsp"+"</td>");   //1st column + 1st line intersection
-      }
-      if(i === 0){
-        document.write("<th>"+(k + 1)+"</th>");   //Numbers inside first column
-      }
+$("button").click(function(){
+  var data = [document.getElementById('value1').value, document.getElementById('value2').value, document.getElementById('value3').value];
+  var barChart = drawBarChart($(document.body), data);
+});
+function drawBarChart(container, data) {
+  var table = $("<table />");
+  $.each(data, function(index, value) {
+    var row = $("<tr />");
+    row.append("<th>"+value+"</th>");
+    for(var i = 0; i < value; i++){
+      var col = $("<td />");
+      row.append(col);
+      table.append(row);
     }
-
-    document.write("<tr id=row"+i+">");                        //Next column
-    document.write("<th>"+data[i]+"</th>");       //Labels
-    for(var j = 0; j < data[i]; j++){
-      document.write("<td>"+"&nbsp"+"</td>");     //Bars
-    }
-    document.write("</tr>");                      //Next column
-  }
-  return null;
+    row.append("<th>"+value+"</th>");
+    table.append(row);
+  });
+  return container.append(table);
 }
