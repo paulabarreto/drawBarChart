@@ -1,6 +1,30 @@
+$(document).ready(function(){
+  var select = "";
+  for(var k = 0; k < 50; k++) {
+    select += "<option val=" + k + ">" + k + "<option/>";
+  }
+  $("#valueQty").html(select);
+
+$(document).on("input", "#valueQty", function() {
+  var valueEntered = false;
+  if ($(this).val() !== "") {
+        valueEntered = true;
+        var valueQty = $(this).val();
+        for(var j = 0; j < valueQty; j++){
+          var inputValue = document.createElement("input");
+          inputValue.setAttribute("type", "text");
+          inputValue.setAttribute("id", "value" + j);
+          $("#inputVal").append(inputValue);
+        }
+  }
+});
+
 $("button").click(function(){
-  var data = [document.getElementById('value1').value, document.getElementById('value2').value, document.getElementById('value3').value];
-  var barChart = drawBarChart($(document.body), data);
+  var data = [];
+  for(var k = 0; k < 3; k++){
+    data.push($("#value" + k).val());
+  }
+  var barChart = drawBarChart($("#barChart"), data);
 });
 function drawBarChart(container, data) {
   var table = $("<table />");
@@ -17,3 +41,5 @@ function drawBarChart(container, data) {
   });
   return container.append(table);
 }
+
+});
