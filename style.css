@@ -1,5 +1,5 @@
 td {
-  background-color: green;
+  background-color: black;
 }
 table {
   border-collapse: collapse;
@@ -12,4 +12,7 @@ th {
 
 div {
   margin: 100px;
+}
+h1 {
+  text-align: center;
 }
