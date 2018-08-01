@@ -21,8 +21,10 @@ $(document).on("input", "#valueQty", function() {
 
 $("button").click(function(){
   var data = [];
-  for(var k = 0; k < 3; k++){
-    data.push($("#value" + k).val());
+  for(var k = 0; k < 50; k++){
+    if($("#value" + k).val() !== undefined){
+      data.push($("#value" + k).val());
+    }
   }
   var barChart = drawBarChart($("#barChart"), data);
 });
