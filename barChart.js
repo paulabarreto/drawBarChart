@@ -36,19 +36,23 @@ $(document).ready(function(){
       for(var i = 0; i < value; i++){
         var col = $("<td />");
         row.append(col);
+        (col).addClass("bar" + index);
         table.append(row);
       }
       row.append("<th>"+value+"</th>");
       table.append(row);
-      var colorWell;
+      var colorWell = document.createElement("input");
+      colorWell.setAttribute("type", "color");
+      colorWell.setAttribute("id", "colorWell" + index);
+      container.append(colorWell);
       document.addEventListener("click", startup, false);
       function startup(){
-        colorWell = document.querySelector("#colorWell");
-        colorWell.addEventListener("input", updateFirst, false);
+        colorWell = document.querySelector("#colorWell" + index);
+        colorWell.addEventListener("input", updateAll, false);
         colorWell.select();
       }
-      function updateFirst(event){
-        document.querySelectorAll("td").forEach(function(p){
+      function updateAll(event) {
+        document.querySelectorAll(".bar" + index).forEach(function(p) {
           p.style.backgroundColor = event.target.value;
         });
       }
