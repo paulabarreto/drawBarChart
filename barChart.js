@@ -18,22 +18,23 @@ $(document).ready(function(){
   });
 
   //Creates input boxes for bar chart values
+    var valueQty = $("#valueQty").val();
+    for(var j = 0; j < valueQty; j++){
+      var inputValue = document.createElement("input");
+      inputValue.setAttribute("type", "text");
+      inputValue.setAttribute("id", "value" + j);
+      var label = document.createElement("label");
+      label.setAttribute("for", "value" + j);
+      var name = document.createTextNode("Value: ");
+      $("#inputVal").append(name);
+      $("#inputVal").append(inputValue);
+      $("#inputVal").append("<br>");
+    }
 
-  var valueQty = $("#valueQty").val();
-  for(var j = 0; j < valueQty; j++){
-    var inputValue = document.createElement("input");
-    inputValue.setAttribute("type", "text");
-    inputValue.setAttribute("id", "value" + j);
-    var label = document.createElement("label");
-    label.setAttribute("for", "value" + j);
-    var name = document.createTextNode("Value: ");
-    $("#inputVal").append(name);
-    $("#inputVal").append(inputValue);
-    $("#inputVal").append("<br>");
-  }
 
 /*Creates array for bar chart data*/
-  $("button").click(function(){
+  $("#submit").click(function(){
+    $(this).attr('disabled', 'disabled');
     var data = [];
     for(var k = 0; k < 50; k++){
       if($("#value" + k).val() !== undefined){
@@ -81,4 +82,14 @@ $(document).ready(function(){
     });
     return container.append(table);
     }
+
+//Start Over Button
+    $("#startOver").click(function(){
+      if (confirm("Start Over?")) {
+        location.reload();
+      } else {
+
+      }
+    })
+
 });
