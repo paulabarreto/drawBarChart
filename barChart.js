@@ -1,4 +1,5 @@
 $(document).ready(function(){
+/*Button for selecting how many values for bar chart*/
   var select = "";
   for(var k = 0; k < 50; k++) {
     select += "<option val=" + k + ">" + k + "<option/>";
@@ -6,19 +7,22 @@ $(document).ready(function(){
   $("#valueQty").html(select);
 
   $(document).on("input", "#valueQty", function() {
-    var valueEntered = false;
-    if ($(this).val() !== "") {
-      valueEntered = true;
+    if ($(this).val() !== 0) {
       var valueQty = $(this).val();
       for(var j = 0; j < valueQty; j++){
-        var inputValue = document.createElement("input");
+        var inputValue = document.createElement("input");     //Creates input boxes for bar chart values
         inputValue.setAttribute("type", "text");
         inputValue.setAttribute("id", "value" + j);
+        var label = document.createElement("label");
+        label.setAttribute("for", "value" + j);
+        var name = document.createTextNode("Value: ");
+        $("#inputVal").append(name);
         $("#inputVal").append(inputValue);
+        $("#inputVal").append("<br>");
       }
     }
   });
-
+/*Creates array for bar chart data*/
   $("button").click(function(){
     var data = [];
     for(var k = 0; k < 50; k++){
@@ -28,6 +32,8 @@ $(document).ready(function(){
     }
     var barChart = drawBarChart($("#barChart"), data);
   });
+
+/*Bar chart is designed*/
   function drawBarChart(container, data) {
     var table = $("<table />");
     $.each(data, function(index, value) {
@@ -41,10 +47,16 @@ $(document).ready(function(){
       }
       row.append("<th>"+value+"</th>");
       table.append(row);
+
+      /*Color customization*/
       var colorWell = document.createElement("input");
       colorWell.setAttribute("type", "color");
       colorWell.setAttribute("id", "colorWell" + index);
-      container.append(colorWell);
+      var label = document.createElement("label");
+      var text = document.createTextNode(text);
+      label.appendChild(text);
+      colorWell.appendChild(label);
+      $("#colors").append(colorWell);
       document.addEventListener("click", startup, false);
       function startup(){
         colorWell = document.querySelector("#colorWell" + index);
