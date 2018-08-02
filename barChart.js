@@ -6,22 +6,32 @@ $(document).ready(function(){
   }
   $("#valueQty").html(select);
 
-  $(document).on("input", "#valueQty", function() {
-    if ($(this).val() !== 0) {
-      var valueQty = $(this).val();
-      for(var j = 0; j < valueQty; j++){
-        var inputValue = document.createElement("input");     //Creates input boxes for bar chart values
-        inputValue.setAttribute("type", "text");
-        inputValue.setAttribute("id", "value" + j);
-        var label = document.createElement("label");
-        label.setAttribute("for", "value" + j);
-        var name = document.createTextNode("Value: ");
-        $("#inputVal").append(name);
-        $("#inputVal").append(inputValue);
-        $("#inputVal").append("<br>");
-      }
-    }
+  /*Select Items Refreshes page but keeps input there*/
+  $("#valueQty").change(function() {
+    location.reload();
   });
+  var selectedItem = sessionStorage.getItem("SelectedItem");
+  $("#valueQty").val(selectedItem);
+  $("#valueQty").change(function() {
+    var dropVal = $(this).val();
+    sessionStorage.setItem("SelectedItem", dropVal);
+  });
+
+  //Creates input boxes for bar chart values
+
+  var valueQty = $("#valueQty").val();
+  for(var j = 0; j < valueQty; j++){
+    var inputValue = document.createElement("input");
+    inputValue.setAttribute("type", "text");
+    inputValue.setAttribute("id", "value" + j);
+    var label = document.createElement("label");
+    label.setAttribute("for", "value" + j);
+    var name = document.createTextNode("Value: ");
+    $("#inputVal").append(name);
+    $("#inputVal").append(inputValue);
+    $("#inputVal").append("<br>");
+  }
+
 /*Creates array for bar chart data*/
   $("button").click(function(){
     var data = [];
@@ -71,5 +81,4 @@ $(document).ready(function(){
     });
     return container.append(table);
     }
-
 });
