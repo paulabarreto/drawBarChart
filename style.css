@@ -5,9 +5,8 @@ table {
   border-collapse: collapse;
   transform: rotate(270deg);
 }
-th {
+.value {
   transform: rotate(90deg);
-
 }
 
 div {

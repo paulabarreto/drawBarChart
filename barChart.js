@@ -20,6 +20,7 @@ $(document).ready(function(){
   //Creates input boxes for bar chart values
     var valueQty = $("#valueQty").val();
     for(var j = 0; j < valueQty; j++){
+      //Values input boxes
       var inputValue = document.createElement("input");
       inputValue.setAttribute("type", "text");
       inputValue.setAttribute("id", "value" + j);
@@ -28,19 +29,31 @@ $(document).ready(function(){
       var name = document.createTextNode("Value: ");
       $("#inputVal").append(name);
       $("#inputVal").append(inputValue);
-      $("#inputVal").append("<br>");
-    }
 
+      //Labels for values
+      var inputValueLabel = document.createElement("input");
+      inputValueLabel.setAttribute("type", "text");
+      inputValueLabel.setAttribute("id", "valLabel" + j);
+      var labelLabel = document.createElement("label");
+      labelLabel.setAttribute("for", "valLabel" + j);
+      var nameLabel = document.createTextNode("  Label: ");
+      $("#inputVal").append(nameLabel);
+      $("#inputVal").append(inputValueLabel);
+
+      $("#inputVal").append("<br>");
+
+    }
 
 /*Creates array for bar chart data*/
   $("#submit").click(function(){
-    $(this).attr('disabled', 'disabled');
+    $(this).attr('disabled', 'disabled');         //Disable submit after 1st submission
     var data = [];
     for(var k = 0; k < 50; k++){
       if($("#value" + k).val() !== undefined){
-        data.push($("#value" + k).val());
+        data.push({Value: $("#value" + k).val(), Label: $("#valLabel" + k).val()});
       }
     }
+
     var barChart = drawBarChart($("#barChart"), data);
   });
 
@@ -49,14 +62,14 @@ $(document).ready(function(){
     var table = $("<table />");
     $.each(data, function(index, value) {
       var row = $("<tr />");
-      row.append("<th>"+value+"</th>");
-      for(var i = 0; i < value; i++){
+      row.append("<th>"+this.Label+"</th>");
+      for(var i = 0; i < this.Value; i++){
         var col = $("<td />");
         row.append(col);
         (col).addClass("bar" + index);
         table.append(row);
       }
-      row.append("<th>"+value+"</th>");
+      row.append("<th class=value>"+this.Value+"</th>");
       table.append(row);
 
       /*Color customization*/
@@ -79,16 +92,15 @@ $(document).ready(function(){
           p.style.backgroundColor = event.target.value;
         });
       }
+
     });
     return container.append(table);
     }
 
 //Start Over Button
     $("#startOver").click(function(){
-      if (confirm("Start Over?")) {
+      if(confirm("Start Over?")){
         location.reload();
-      } else {
-
       }
     })
 
