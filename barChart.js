@@ -73,6 +73,8 @@ $(document).ready(function(){
       table.append(row);
 
       /*Color customization*/
+
+
       var colorWell = document.createElement("input");
       colorWell.setAttribute("type", "color");
       colorWell.setAttribute("id", "colorWell" + index);
@@ -80,7 +82,6 @@ $(document).ready(function(){
       var text = document.createTextNode(text);
       label.appendChild(text);
       colorWell.appendChild(label);
-      $("#colors").append(colorWell);
       document.addEventListener("click", startup, false);
       function startup(){
         colorWell = document.querySelector("#colorWell" + index);
@@ -92,6 +93,15 @@ $(document).ready(function(){
           p.style.backgroundColor = event.target.value;
         });
       }
+
+      //Labels for color picker
+      var colorLabel = document.createElement("label");
+      labelLabel.setAttribute("for", label);
+      var nameLabel = document.createTextNode(this.Label);
+      $("#colors").append(nameLabel);
+      $("#colors").append("<br>");
+      $("#colors").append(colorWell);
+      $("#colors").append("<br>");
 
     });
     return container.append(table);
