@@ -53,13 +53,15 @@ $(document).ready(function(){
         data.push({Value: $("#value" + k).val(), Label: $("#valLabel" + k).val()});
       }
     }
-
-    var barChart = drawBarChart($("#barChart"), data);
+    var options = {height: "300px", width: "500px"};
+    var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
 /*Bar chart is designed*/
-  function drawBarChart(container, data) {
+  function drawBarChart(data, options, element) {
     var table = $("<table />");
+    $(table).height(options.height);
+    $(table).width(options.width);
     $.each(data, function(index, value) {
       var row = $("<tr />");
       row.append("<th>"+this.Label+"</th>");
@@ -73,7 +75,6 @@ $(document).ready(function(){
       table.append(row);
 
       /*Color customization*/
-
 
       var colorWell = document.createElement("input");
       colorWell.setAttribute("type", "color");
@@ -104,7 +105,7 @@ $(document).ready(function(){
       $("#colors").append("<br>");
 
     });
-    return container.append(table);
+    return element.append(table);
     }
 
 //Start Over Button
