@@ -89,7 +89,7 @@ $(document).ready(function(){
     $(table).width(options.width);
     $.each(data, function(index, value) {
       var row = $("<tr />");
-      row.append("<th> <p class=label>"+this.Label+"</p></th>");
+      row.append("<th> <p class=label" + index+">"+this.Label+"</p></th>");
       for(var i = 0; i < this.Value; i++){
         if(i === 0 && options.position === "3"){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
@@ -110,13 +110,10 @@ $(document).ready(function(){
 
       /*Color customization*/
 
+      //BARS
       var colorWell = document.createElement("input");
       colorWell.setAttribute("type", "color");
       colorWell.setAttribute("id", "colorWell" + index);
-      var label = document.createElement("label");
-      var text = document.createTextNode(text);
-      label.appendChild(text);
-      colorWell.appendChild(label);
       document.addEventListener("click", startup, false);
       function startup(){
         colorWell = document.querySelector("#colorWell" + index);
@@ -129,14 +126,46 @@ $(document).ready(function(){
         });
       }
 
-      //Labels for color picker
+      //Labels for Bar Color Picker
       var colorLabel = document.createElement("label");
       labelLabel.setAttribute("for", label);
       var nameLabel = document.createTextNode(this.Label);
+
+      //Labels
+      var colorWellLabels = document.createElement("input");
+      colorWellLabels.setAttribute("type", "color");
+      colorWellLabels.setAttribute("id", "colorWellLabels" + index);
+      document.addEventListener("click", startupLabels, false);
+      function startupLabels(){
+        colorWellLabels = document.querySelector("#colorWellLabels" + index);
+        colorWellLabels.addEventListener("input", updateFirst, false);
+        colorWellLabels.select();
+      }
+      function updateFirst(event) {
+        var l = document.querySelector(".label" + index);
+        if(l){
+          l.style.color = event.target.value;
+        }
+      }
+
+      //Labels for Label Color Picker
+      var labelColorLabel = document.createElement("label");
+      labelColorLabel.setAttribute("for", label);
+      var nameLabelLabel = document.createTextNode(this.Label);
+
+      //Dom insertion - Bar Colors
+      $("#colors").append("<br>");
       $("#colors").append(nameLabel);
       $("#colors").append("<br>");
       $("#colors").append(colorWell);
       $("#colors").append("<br>");
+
+      //DOM insertion - Label Colors
+      $("#colorLabels").append("<br>");
+      $("#colorLabels").append(nameLabelLabel);
+      $("#colorLabels").append("<br>");
+      $("#colorLabels").append(colorWellLabels);
+      $("#colorLabels").append("<br>");
 
     });
     return element.append(table);

@@ -1,10 +1,20 @@
-td {
-  background-color: grey;
-  color: red;
-  text-align: center;
+.container{
+    display: flex;
+}
+.fixed{
+    width: 200px;
+}
+.flex-item{
+    flex-grow: 1;
 }
 
-p.label {
+td {
+  color: red;
+  text-align: center;
+  background-color: black;
+}
+
+p {
   transform: rotate(90deg);
   text-align: center;
 }
