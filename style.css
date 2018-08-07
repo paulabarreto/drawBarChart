@@ -12,15 +12,30 @@ td {
   color: red;
   text-align: center;
   background-color: black;
+  table-layout: fixed;
+}
+
+p.Y {
+  background-color: red;
+  border 2px solid black;
+}
+
+td.Y {
+  background-color: white;
 }
 
 td.space {
   background-color: white;
 }
 
-p {
+p.number {
   transform: rotate(90deg);
   text-align: center;
+}
+
+p.Y {
+  background-color: red;
+  height: 1px;
 }
 
 p.number {

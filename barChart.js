@@ -105,11 +105,22 @@ $(document).ready(function(){
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
-/*Bar chart is designed*/
+//Bar chart is designed
   function drawBarChart(data, options, element) {
     var table = $("<table />");
     $(table).height(options.height);
     $(table).width(options.width);
+
+    //Y Axis
+    var Yrow = $("<tr />");
+    var maxValue =  Math.max.apply(Math, data.map(function(o){
+      return o.Value;
+    }))
+    var yAxis = $("<td class=Y colspan="+(maxValue + 1)+"><p class=Y>&nbsp</p></td>");
+    Yrow.append(yAxis);
+    table.append(Yrow);
+
+    //Bars
     $.each(data, function(index, value) {
       var row = $("<tr />");
       row.append("<th> <p class=label" + index+">"+this.Label+"</p></th>");
