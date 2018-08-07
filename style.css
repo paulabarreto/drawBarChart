@@ -14,6 +14,10 @@ td {
   background-color: black;
 }
 
+td.space {
+  background-color: white;
+}
+
 p {
   transform: rotate(90deg);
   text-align: center;

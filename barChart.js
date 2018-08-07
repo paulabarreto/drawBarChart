@@ -67,6 +67,28 @@ $(document).ready(function(){
     selectPosition.add(centre);
     selectPosition.add(bottom);
     $("#inputVal").append(selectPosition);
+    $("#inputVal").append("<br>");
+    $("#inputVal").append("<br>");
+
+    //Bar Spacing
+    var selectBarSpacing = document.createElement("select");
+    selectBarSpacing.setAttribute("id", "selectBarSpacing");
+    var spacingLabel = document.createElement("label");
+    spacingLabel.setAttribute("for", "selectBarSpacing");
+    var nameSpacingLabel = document.createTextNode("Bar Spacing: ");
+    $("#inputVal").append(nameSpacingLabel);
+    $("#inputVal").append(spacingLabel);
+    var none = document.createElement("option");
+    var single = document.createElement("option");
+    var double = document.createElement("option");
+    none.value = "1";
+    none.text = "None";
+    single.value = "2";
+    single.text = "Space";
+
+    selectBarSpacing.add(none);
+    selectBarSpacing.add(single);
+    $("#inputVal").append(selectBarSpacing);
 
 /*Creates array for bar chart data*/
   $("#submit").click(function(){
@@ -78,7 +100,8 @@ $(document).ready(function(){
       }
     }
     var selectedPosition = $("#selectPosition").val();
-    var options = {height: "300px", width: "500px", position: selectedPosition};
+    var barSpacing = $("#selectBarSpacing").val();
+    var options = {height: "300px", width: "500px", position: selectedPosition, barSpacing: barSpacing};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
@@ -101,12 +124,18 @@ $(document).ready(function(){
         else {
           var col = $("<td />");
         }
+
         row.append(col);
         (col).addClass("bar" + index);
+
         table.append(row);
       }
 
-      table.append(row);
+      //Add Spacing between bars
+      if(options.barSpacing === "2"){
+        var space = $("<td class=space />");
+        table.append(space);
+      }
 
       /*Color customization*/
 
