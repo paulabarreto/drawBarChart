@@ -29,6 +29,7 @@ $(document).ready(function(){
       var name = document.createTextNode("Value: ");
       $("#inputVal").append(name);
       $("#inputVal").append(inputValue);
+      $("#inputVal").append("<br>");
 
       //Labels for values
       var inputValueLabel = document.createElement("input");
@@ -40,9 +41,32 @@ $(document).ready(function(){
       $("#inputVal").append(nameLabel);
       $("#inputVal").append(inputValueLabel);
 
-      $("#inputVal").append("<br>");
+      $("#inputVal").append("<br>"+"<br>");
 
     }
+    $("#inputVal").append("<br>");
+
+    //Select Position of values
+    var selectPosition = document.createElement("select");
+    selectPosition.setAttribute("id", "selectPosition");
+    var positionLabel = document.createElement("label");
+    positionLabel.setAttribute("for", "selectPosition");
+    var namePositionLabel = document.createTextNode("Position: ");
+    $("#inputVal").append(namePositionLabel);
+    $("#inputVal").append(positionLabel);
+    var top = document.createElement("option");
+    var centre = document.createElement("option");
+    var bottom = document.createElement("option");
+    top.value = "1";
+    top.text = "Top";
+    centre.value = "2";
+    centre.text = "Centre";
+    bottom.value = "3";
+    bottom.text = "Bottom";
+    selectPosition.add(top);
+    selectPosition.add(centre);
+    selectPosition.add(bottom);
+    $("#inputVal").append(selectPosition);
 
 /*Creates array for bar chart data*/
   $("#submit").click(function(){
@@ -53,7 +77,8 @@ $(document).ready(function(){
         data.push({Value: $("#value" + k).val(), Label: $("#valLabel" + k).val()});
       }
     }
-    var options = {height: "300px", width: "500px"};
+    var selectedPosition = $("#selectPosition").val();
+    var options = {height: "300px", width: "500px", position: selectedPosition};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
@@ -64,14 +89,23 @@ $(document).ready(function(){
     $(table).width(options.width);
     $.each(data, function(index, value) {
       var row = $("<tr />");
-      row.append("<th>"+this.Label+"</th>");
+      row.append("<th> <p class=label>"+this.Label+"</p></th>");
       for(var i = 0; i < this.Value; i++){
-        var col = $("<td />");
+        if(i === 0 && options.position === "3"){
+          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
+        } else if(i === (this.Value - 1) && options.position === "1"){
+          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
+        } else if((i === ((this.Value - 1)/2) || i === (this.Value / 2)) && options.position === "2"){
+          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
+        }
+        else {
+          var col = $("<td />");
+        }
         row.append(col);
         (col).addClass("bar" + index);
         table.append(row);
       }
-      row.append("<th class=value>"+this.Value+"</th>");
+
       table.append(row);
 
       /*Color customization*/

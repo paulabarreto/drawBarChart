@@ -1,12 +1,28 @@
 td {
-  background-color: black;
+  background-color: grey;
+  color: red;
+  text-align: center;
 }
+
+p.label {
+  transform: rotate(90deg);
+  text-align: center;
+}
+
+p.number {
+  transform: rotate(90deg);
+  text-align: center;
+}
+
+
 table {
   border-collapse: collapse;
   transform: rotate(270deg);
+  table-layout: fixed;
 }
 .value {
   transform: rotate(90deg);
+  color: red;
 }
 
 div {
