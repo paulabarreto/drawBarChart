@@ -1,5 +1,6 @@
 $(document).ready(function(){
-/*Button for selecting how many values for bar chart*/
+
+//Button for selecting how many values for bar chart
   var select = "";
   for(var k = 0; k < 50; k++) {
     select += "<option val=" + k + ">" + k + "<option/>";
@@ -101,7 +102,7 @@ $(document).ready(function(){
     }
     var selectedPosition = $("#selectPosition").val();
     var barSpacing = $("#selectBarSpacing").val();
-    var options = {height: "300px", width: "500px", position: selectedPosition, barSpacing: barSpacing};
+    var options = {height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
@@ -111,21 +112,13 @@ $(document).ready(function(){
     $(table).height(options.height);
     $(table).width(options.width);
 
-    //Y Axis
-    var Yrow = $("<tr />");
-    var maxValue =  Math.max.apply(Math, data.map(function(o){
-      return o.Value;
-    }))
-    var yAxis = $("<td class=Y colspan="+(maxValue + 1)+"><p class=Y>&nbsp</p></td>");
-    Yrow.append(yAxis);
-    table.append(Yrow);
 
     //Bars
     $.each(data, function(index, value) {
       var row = $("<tr />");
       row.append("<th> <p class=label" + index+">"+this.Label+"</p></th>");
       for(var i = 0; i < this.Value; i++){
-        if(i === 0 && options.position === "3"){
+        if(i === 0 && options.position === "3"){                              //Numbers
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
         } else if(i === (this.Value - 1) && options.position === "1"){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
@@ -133,7 +126,7 @@ $(document).ready(function(){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
         }
         else {
-          var col = $("<td />");
+          var col = $("<td> <p class=bars style=height:"+options.height+">&nbsp</p> </td>");                //Bars
         }
 
         row.append(col);
@@ -141,6 +134,8 @@ $(document).ready(function(){
 
         table.append(row);
       }
+
+
 
       //Add Spacing between bars
       if(options.barSpacing === "2"){
