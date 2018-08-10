@@ -1,3 +1,5 @@
+"use strict";
+
 $(document).ready(function(){
 
 //Button for selecting how many values for bar chart
@@ -6,6 +8,17 @@ $(document).ready(function(){
     select += "<option val=" + k + ">" + k + "<option/>";
   }
   $("#valueQty").html(select);
+
+  var title = document.createElement("input");
+  title.setAttribute("type", "text");
+  title.setAttribute("id", "title");
+  var titleLabel = document.createElement("label");
+  titleLabel.setAttribute("for", "title");
+  var labelTitleName = document. createTextNode("Bar Chart Title: ");
+  $(titleLabel).append(labelTitleName);
+  $("#inputVal").append(titleLabel);
+  $("#inputVal").append(title);
+  $("#inputVal").append("<br><br><br>");
 
   /*Select Items Refreshes page but keeps input there*/
   $("#valueQty").change(function() {
@@ -102,37 +115,75 @@ $(document).ready(function(){
     }
     var selectedPosition = $("#selectPosition").val();
     var barSpacing = $("#selectBarSpacing").val();
-    var options = {height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
+    var title = $("#title").val();
+    var options = {title: title, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
 //Bar chart is designed
   function drawBarChart(data, options, element) {
-    var table = $("<table />");
+
+    var table = $("<table id=table />");
     $(table).height(options.height);
     $(table).width(options.width);
 
 
-    //Bars
     $.each(data, function(index, value) {
+
+      var maxValue =  Math.max.apply(Math, data.map(function(o){
+        return o.Value;
+      }))
+
+      //Y-Axis
+      if(index === 0){
+        var yAxis = $("<tr class=yAxis/>");
+
+        for(j = 0; j <= maxValue; j++){
+          if(maxValue > 0 && maxValue <= 10){
+            yAxis.append("<td class=yAxis> <p>"+j+"____</p></td>");
+          } else if (maxValue > 10 && maxValue <= 20){
+            if(j === 0 || j % 5 === 0){
+              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
+            } else{
+            yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+            }
+          } else if(maxValue > 20 && maxValue <= 50){
+            if(j === 0 || j % 10 === 0){
+              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
+            } else{
+              yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+            }
+          } else if(maxValue > 50 && maxValue <= 100){
+            if(j === 0 || j % 20 === 0){
+              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
+            } else{
+              yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+            }
+          }
+
+          table.append(yAxis);
+        }
+      }
+
+      //X-Axis
       var row = $("<tr />");
       row.append("<th> <p class=label" + index+">"+this.Label+"</p></th>");
-      for(var i = 0; i < this.Value; i++){
-        if(i === 0 && options.position === "3"){                              //Numbers
+      //Bars
+      for(var i = 0; i < (this.Value - 1); i++) {
+        if(i === 0 && options.position === "3"){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
-        } else if(i === (this.Value - 1) && options.position === "1"){
+        } else if(i === (this.Value - 2) && options.position === "1"){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
         } else if((i === ((this.Value - 1)/2) || i === (this.Value / 2)) && options.position === "2"){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
-        }
-        else {
-          var col = $("<td> <p class=bars style=height:"+options.height+">&nbsp</p> </td>");                //Bars
+        } else {
+          var col = $("<td />");
         }
 
-        row.append(col);
         (col).addClass("bar" + index);
-
+        row.append(col);
         table.append(row);
+
       }
 
 
@@ -142,6 +193,8 @@ $(document).ready(function(){
         var space = $("<td class=space />");
         table.append(space);
       }
+
+
 
       /*Color customization*/
 
@@ -203,7 +256,9 @@ $(document).ready(function(){
       $("#colorLabels").append("<br>");
 
     });
+
     return element.append(table);
+
     }
 
 //Start Over Button
