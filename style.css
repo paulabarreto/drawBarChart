@@ -1,47 +1,66 @@
 h1 {
-  text-align: center;
+   text-align: center;
 }
 
 div {
   margin: 100px;
-}
+ }
 
 table {
   border-collapse: collapse;
-  table-layout: fixed;
   transform: rotate(-90deg);
-}
+  table-layout: fixed;
+ }
 
 td {
   color: red;
-  text-align: center;
-  table-layout: fixed;
-  border: 2px solid red;
-}
-
-th {
-  transform: rotate(90deg);
-}
-
-
-td.space {
-  background-color: white;
-}
-
-
-p.number {
-  transform: rotate(90deg);
-  text-align: center;
-}
-
-p.bars {
+  margin-bottom: 8px;
   background-color: black;
 }
 
-.value {
-  transform: rotate(90deg);
-  color: red;
+.lines {
+  border: 1px solid red;
 }
+
+.yAxis {
+  background-color: white;
+  font-size: smaller;
+  border-bottom: 1px solid red;
+  vertical-align: bottom;
+  height: 0.5px;
+}
+
+.yAxisNum {
+  background-color: white;
+  font-size: smaller;
+  border-bottom: 1px solid red;
+  vertical-align: bottom;
+  border-right: 1px solid red;
+  height: 0.5px;
+}
+
+ td.space {
+  background-color: white;
+}
+
+ p {
+  transform: rotate(90deg);
+  margin-right: 8px;
+  margin-bottom: 8px;
+ }
+
+ p.number {
+   transform: rotate(90deg);
+   font-size: small;
+ }
+
+
+ .value {
+   transform: rotate(90deg);
+   color: red;
+ }
+
+
 
 .container{
     display: flex;
