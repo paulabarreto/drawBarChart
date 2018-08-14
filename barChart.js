@@ -124,9 +124,13 @@ $(document).ready(function(){
   function drawBarChart(data, options, element) {
 
     var table = $("<table id=table />");
+
     $(table).height(options.height);
     $(table).width(options.width);
 
+
+    var title = $("<h2>&emsp;&emsp;&emsp;"+options.title+"</h2>");
+    element.append(title);
 
     $.each(data, function(index, value) {
 
@@ -134,57 +138,105 @@ $(document).ready(function(){
         return o.Value;
       }))
 
-      //Y-Axis
-      if(index === 0){
-        var yAxis = $("<tr class=yAxis/>");
 
-        for(j = 0; j <= maxValue; j++){
-          if(maxValue > 0 && maxValue <= 10){
-            yAxis.append("<td class=yAxis> <p>"+j+"____</p></td>");
-          } else if (maxValue > 10 && maxValue <= 20){
-            if(j === 0 || j % 5 === 0){
-              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
-            } else{
-            yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+      //Y-AXIS
+
+      var gap = 1;
+
+      if (maxValue <= 10){
+        gap = 2;
+      } else if(maxValue > 10 && maxValue <= 100){
+        gap = 3;
+      } else if(maxValue > 100 && maxValue <= 500){
+        gap = 4;
+      }
+
+      var row = $("<tr />");
+
+      if(index === 0){
+
+        var yAxisTitle = $("<tr> <th colspan="+maxValue+"class=yAxisTitle>Title</th> </tr>");
+        table.append(yAxisTitle);
+
+        var yAxis = $("<tr />");
+
+        for(var j = 0; j <= maxValue; j++){
+
+          switch(gap){
+
+            case 1:
+            var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+            yAxis.append(yAxisTd);
+            break;
+
+            case 2:
+            if (j % 2 === 0){
+              var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+              yAxis.append(yAxisTd);
             }
-          } else if(maxValue > 20 && maxValue <= 50){
-            if(j === 0 || j % 10 === 0){
-              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
-            } else{
-              yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+            else {
+              var yAxisTd = $("<td class=yAxisN/>");
+              yAxis.append(yAxisTd);
             }
-          } else if(maxValue > 50 && maxValue <= 100){
-            if(j === 0 || j % 20 === 0){
-              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
-            } else{
-              yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+            break;
+
+            case 3:
+            if (j % 10 === 0){
+              var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+              yAxis.append(yAxisTd);
+            }
+            else {
+              var yAxisTd = $("<td class=yAxisN/>");
+              yAxis.append(yAxisTd);
+            }
+            break;
+
+          case 4:
+          if (j % 100 === 0){
+              var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+              yAxis.append(yAxisTd);
+            }
+            else{
+              var yAxisTd = $("<td class=yAxisN/>");
+              yAxis.append(yAxisTd);
             }
           }
 
-          table.append(yAxis);
+
         }
+
+        table.append(yAxis);
+
       }
 
       //X-Axis
+
       var row = $("<tr />");
+
       row.append("<th> <p class=label" + index+">"+this.Label+"</p></th>");
+
       //Bars
-      for(var i = 0; i < (this.Value - 1); i++) {
-        if(i === 0 && options.position === "3"){
+      for(var i = 0; i < this.Value; i++) {
+
+          if(i === 0 && options.position === "3"){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
-        } else if(i === (this.Value - 2) && options.position === "1"){
-          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
+        } else if(i === (this.Value - 1) && options.position === "1"){
+          var col = $("<td> <p class=number id=cell"+i+">"+this.Value+"</p></td>");
         } else if((i === ((this.Value - 1)/2) || i === (this.Value / 2)) && options.position === "2"){
           var col = $("<td> <p class=number>"+this.Value+"</p></td>");
         } else {
           var col = $("<td />");
         }
 
+        if(i === 0){
+          (col).addClass("xAxis");
+        }
+
         (col).addClass("bar" + index);
         row.append(col);
         table.append(row);
+    }
 
-      }
 
 
 
@@ -193,7 +245,6 @@ $(document).ready(function(){
         var space = $("<td class=space />");
         table.append(space);
       }
-
 
 
       /*Color customization*/
@@ -257,7 +308,12 @@ $(document).ready(function(){
 
     });
 
-    return element.append(table);
+    element.append(table);
+
+    var xAxisTitle = $("<h4>&emsp;&emsp;&emsp;&emsp;&emsp;Title</h4>");
+    element.append(xAxisTitle);
+
+    return element;
 
     }
 
