@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 //Button for selecting how many values for bar chart
   var select = "";
-  for(var k = 0; k < 50; k++) {
+  for(var k = 0; k < 11; k++) {
     select += "<option val=" + k + ">" + k + "<option/>";
   }
   $("#valueQty").html(select);
@@ -15,9 +15,51 @@ $(document).ready(function(){
   var titleLabel = document.createElement("label");
   titleLabel.setAttribute("for", "title");
   var labelTitleName = document. createTextNode("Bar Chart Title: ");
+
+  var titleSize = document.createElement("select");
+  titleSize.setAttribute("id", "titleSize");
+  var titleSizeLabel = document.createElement("label");
+  titleSizeLabel.setAttribute("for", "titleSize");
+  var nameTitleSizeLabel = document.createTextNode("Title Size: ");
+
+  var xxSmall = document.createElement("option");
+  var xSmall = document.createElement("option");
+  var small = document.createElement("option");
+  var medium = document.createElement("option");
+  var large = document.createElement("option");
+  var xLarge = document.createElement("option");
+  var xxLarge = document.createElement("option");
+
+  xxSmall.value = "1";
+  xxSmall.text = "8pt";
+  xSmall.value = "2";
+  xSmall.text = "10pt";
+  small.value = "3";
+  small.text = "12pt";
+  medium.value = "4";
+  medium.text = "16pt";
+  large.value = "5";
+  large.text = "18pt";
+  xLarge.value = "6";
+  xLarge.text = "20pt";
+  xxLarge.value = "7";
+  xxLarge.text = "22pt";
+
+  titleSize.add(xxSmall);
+  titleSize.add(xSmall);
+  titleSize.add(small);
+  titleSize.add(medium);
+  titleSize.add(large);
+  titleSize.add(xLarge);
+  titleSize.add(xxLarge);
+
   $(titleLabel).append(labelTitleName);
   $("#inputVal").append(titleLabel);
   $("#inputVal").append(title);
+  $("#inputVal").append("<br><br>");
+  $("#inputVal").append(nameTitleSizeLabel);
+  $("#inputVal").append(titleSizeLabel);
+  $("#inputVal").append(titleSize);
   $("#inputVal").append("<br><br><br>");
 
   /*Select Items Refreshes page but keeps input there*/
@@ -116,7 +158,8 @@ $(document).ready(function(){
     var selectedPosition = $("#selectPosition").val();
     var barSpacing = $("#selectBarSpacing").val();
     var title = $("#title").val();
-    var options = {title: title, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
+    var titleSize = $("#titleSize").val();
+    var options = {title: title, titleSize: titleSize, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
@@ -128,10 +171,11 @@ $(document).ready(function(){
     $(table).height(options.height);
     $(table).width(options.width);
 
-
-    var title = $("<h2>&emsp;&emsp;&emsp;"+options.title+"</h2>");
-    title.addClass("chartTitle");
-    element.append(title);
+    var title = options.title;
+    var newTitle = title.fontsize(options.titleSize);
+    var addTitle = $("<h2>&emsp;&emsp;&emsp;"+newTitle+"</h2>");
+    addTitle.addClass("chartTitle");
+    element.append(addTitle);
 
     $.each(data, function(index, value) {
 
@@ -283,7 +327,7 @@ $(document).ready(function(){
         }
       }
 
-      //Title
+      //Title Colour
       if(index === 0){
         var colorWellTitle = document.createElement("input");
         colorWellTitle.setAttribute("type", "color");
@@ -301,8 +345,8 @@ $(document).ready(function(){
             title.style.color = event.target.value;
           }
         }
-      }
 
+      }
 
 
       //Labels for Bar Color Picker
@@ -334,7 +378,10 @@ $(document).ready(function(){
       //DOM insertion - Title Colors
       $("#titleDiv").append("<br>");
       $("#titleDiv").append(colorWellTitle);
-      $("#titleDiv").append("<br>");
+
+
+
+
 
     });
 
