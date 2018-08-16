@@ -3,64 +3,10 @@
 $(document).ready(function(){
 
 //Button for selecting how many values for bar chart
-  var select = "";
-  for(var k = 0; k < 11; k++) {
-    select += "<option val=" + k + ">" + k + "<option/>";
-  }
-  $("#valueQty").html(select);
+  var inputVal = selectNumbers(10, $("#valueQty"));
 
-  var title = document.createElement("input");
-  title.setAttribute("type", "text");
-  title.setAttribute("id", "title");
-  var titleLabel = document.createElement("label");
-  titleLabel.setAttribute("for", "title");
-  var labelTitleName = document. createTextNode("Bar Chart Title: ");
-
-  var titleSize = document.createElement("select");
-  titleSize.setAttribute("id", "titleSize");
-  var titleSizeLabel = document.createElement("label");
-  titleSizeLabel.setAttribute("for", "titleSize");
-  var nameTitleSizeLabel = document.createTextNode("Title Size: ");
-
-  var xxSmall = document.createElement("option");
-  var xSmall = document.createElement("option");
-  var small = document.createElement("option");
-  var medium = document.createElement("option");
-  var large = document.createElement("option");
-  var xLarge = document.createElement("option");
-  var xxLarge = document.createElement("option");
-
-  xxSmall.value = "1";
-  xxSmall.text = "8pt";
-  xSmall.value = "2";
-  xSmall.text = "10pt";
-  small.value = "3";
-  small.text = "12pt";
-  medium.value = "4";
-  medium.text = "16pt";
-  large.value = "5";
-  large.text = "18pt";
-  xLarge.value = "6";
-  xLarge.text = "20pt";
-  xxLarge.value = "7";
-  xxLarge.text = "22pt";
-
-  titleSize.add(xxSmall);
-  titleSize.add(xSmall);
-  titleSize.add(small);
-  titleSize.add(medium);
-  titleSize.add(large);
-  titleSize.add(xLarge);
-  titleSize.add(xxLarge);
-
-  $(titleLabel).append(labelTitleName);
-  $("#inputVal").append(titleLabel);
-  $("#inputVal").append(title);
-  $("#inputVal").append("<br><br>");
-  $("#inputVal").append(nameTitleSizeLabel);
-  $("#inputVal").append(titleSizeLabel);
-  $("#inputVal").append(titleSize);
-  $("#inputVal").append("<br><br><br>");
+//Amount of values per bar
+  var inputVal = selectNumbers(3, $("#valQtyBar"));
 
   /*Select Items Refreshes page but keeps input there*/
   $("#valueQty").change(function() {
@@ -74,120 +20,81 @@ $(document).ready(function(){
   });
 
   //Creates input boxes for bar chart values
-    var valueQty = $("#valueQty").val();
-    for(var j = 0; j < valueQty; j++){
-      //Values input boxes
-      var inputValue = document.createElement("input");
-      inputValue.setAttribute("type", "text");
-      inputValue.setAttribute("id", "value" + j);
-      var label = document.createElement("label");
-      label.setAttribute("for", "value" + j);
-      var name = document.createTextNode("Value: ");
-      $("#inputVal").append(name);
-      $("#inputVal").append(inputValue);
+
+
+    $("#createVal").click(function(){
+      var valueQty = $("#valueQty").val();
+      var valQtyBar = $("#valQtyBar").val();
+
+      for(var j = 0; j < valueQty; j++){
+        for (var l = 0; l < valQtyBar; l++){
+          var inputValue = document.createElement("input");
+          inputValue.setAttribute("type", "text");
+          inputValue.setAttribute("id", "value" + j + l);
+          var label = document.createElement("label");
+          label.setAttribute("for", "value" + j + l);
+          var name = document.createTextNode("Value: ");
+          $("#inputVal").append(name);
+          $("#inputVal").append(inputValue);
+          $("#inputVal").append("<br>");
+        }
+        //Labels for values
+        var inputValueLabel = document.createElement("input");
+        inputValueLabel.setAttribute("type", "text");
+        inputValueLabel.setAttribute("id", "valLabel" + j);
+        var labelLabel = document.createElement("label");
+        labelLabel.setAttribute("for", "valLabel" + j);
+        var nameLabel = document.createTextNode("  Label: ");
+        $("#inputVal").append(nameLabel);
+        $("#inputVal").append(inputValueLabel);
+        $("#inputVal").append("<br>"+"<br>");
+
+      }
+      $("#inputVal").append("<br>");
       $("#inputVal").append("<br>");
 
-      //Labels for values
-      var inputValueLabel = document.createElement("input");
-      inputValueLabel.setAttribute("type", "text");
-      inputValueLabel.setAttribute("id", "valLabel" + j);
-      var labelLabel = document.createElement("label");
-      labelLabel.setAttribute("for", "valLabel" + j);
-      var nameLabel = document.createTextNode("  Label: ");
-      $("#inputVal").append(nameLabel);
-      $("#inputVal").append(inputValueLabel);
-
-      $("#inputVal").append("<br>"+"<br>");
-
-    }
-    $("#inputVal").append("<br>");
-
-    //Select Position of values
-    var selectPosition = document.createElement("select");
-    selectPosition.setAttribute("id", "selectPosition");
-    var positionLabel = document.createElement("label");
-    positionLabel.setAttribute("for", "selectPosition");
-    var namePositionLabel = document.createTextNode("Position: ");
-    $("#inputVal").append(namePositionLabel);
-    $("#inputVal").append(positionLabel);
-    var top = document.createElement("option");
-    var centre = document.createElement("option");
-    var bottom = document.createElement("option");
-    top.value = "1";
-    top.text = "Top";
-    centre.value = "2";
-    centre.text = "Centre";
-    bottom.value = "3";
-    bottom.text = "Bottom";
-    selectPosition.add(top);
-    selectPosition.add(centre);
-    selectPosition.add(bottom);
-    $("#inputVal").append(selectPosition);
-    $("#inputVal").append("<br>");
-    $("#inputVal").append("<br>");
-
-    //Bar Spacing
-    var selectBarSpacing = document.createElement("select");
-    selectBarSpacing.setAttribute("id", "selectBarSpacing");
-    var spacingLabel = document.createElement("label");
-    spacingLabel.setAttribute("for", "selectBarSpacing");
-    var nameSpacingLabel = document.createTextNode("Bar Spacing: ");
-    $("#inputVal").append(nameSpacingLabel);
-    $("#inputVal").append(spacingLabel);
-    var none = document.createElement("option");
-    var single = document.createElement("option");
-    var double = document.createElement("option");
-    none.value = "1";
-    none.text = "None";
-    single.value = "2";
-    single.text = "Space";
-
-    selectBarSpacing.add(none);
-    selectBarSpacing.add(single);
-    $("#inputVal").append(selectBarSpacing);
-
-/*Creates array for bar chart data*/
-  $("#submit").click(function(){
-    $(this).attr('disabled', 'disabled');         //Disable submit after 1st submission
-    var data = [];
-    for(var k = 0; k < 50; k++){
-      if($("#value" + k).val() !== undefined){
-        data.push({Value: $("#value" + k).val(), Label: $("#valLabel" + k).val()});
+    //Creates array for bar chart data
+    $("#submit").click(function(){
+      $(this).attr('disabled', 'disabled');         //Disable submit after 1st submission
+      var data = [];
+      for(var k = 0; k < 10; k++){
+          if($("#value" + k + 0).val() !== undefined){
+            data.push({Value: $("#value" + k + 0).val(), Value2: $("#value" + k + 1).val(), Value3: $("#value" + k + 2).val(), Label: $("#valLabel" + k).val()});
+          }
       }
-    }
-    var selectedPosition = $("#selectPosition").val();
-    var barSpacing = $("#selectBarSpacing").val();
-    var title = $("#title").val();
-    var titleSize = $("#titleSize").val();
-    var options = {title: title, titleSize: titleSize, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
-    var barChart = drawBarChart(data, options, $("#barChart"));
-  });
 
-//Bar chart is designed
-  function drawBarChart(data, options, element) {
+      var selectedPosition = $("#selectPosition").val();
+      var barSpacing = $("#selectBarSpacing").val();
+      var title = $("#title").val();
+      var titleSize = $("#titleSize").val();
+      var options = {title: title, titleSize: titleSize, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
+      var barChart = drawBarChart(data, options, $("#barChart"));
+    });
 
-    var table = $("<table id=table />");
+    //Bar chart is designed
+    function drawBarChart(data, options, element) {
 
-    $(table).height(options.height);
-    $(table).width(options.width);
+      var table = $("<table id=table />");
 
-    var title = options.title;
-    var newTitle = title.fontsize(options.titleSize);
-    var addTitle = $("<h2>&emsp;&emsp;&emsp;"+newTitle+"</h2>");
-    addTitle.addClass("chartTitle");
-    element.append(addTitle);
+      $(table).height(options.height);
+      $(table).width(options.width);
 
-    $.each(data, function(index, value) {
+      var title = options.title;
+      var newTitle = title.fontsize(options.titleSize);
+      var addTitle = $("<h2>&emsp;&emsp;&emsp;"+newTitle+"</h2>");
+      addTitle.addClass("chartTitle");
+      element.append(addTitle);
 
-      var maxValue =  Math.max.apply(Math, data.map(function(o){
-        return o.Value;
-      }))
+      $.each(data, function(index, value) {
+
+        var maxValue =  Math.max.apply(Math, data.map(function(o){
+          return o.Value;
+        }))
 
 
       //Y-AXIS
 
       var gap = 1;
-
       if (maxValue <= 10){
         gap = 2;
       } else if(maxValue > 10 && maxValue <= 100){
@@ -258,14 +165,20 @@ $(document).ready(function(){
       row.append("<th> <p class=label"+index+">"+this.Label+"</p></th>");
 
       //Bars
-      for(var i = 0; i < this.Value; i++) {
+
+      var firstBar = createBars(this.Value);
+      var secondBar = createBars(this.Value2);
+      var thirdBar = createBars(this.Value3);
+
+      function createBars(value){
+        for(var i = 0; i < value; i++) {
 
           if(i === 0 && options.position === "3"){
-          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
-        } else if(i === (this.Value - 1) && options.position === "1"){
-          var col = $("<td> <p class=number id=cell"+i+">"+this.Value+"</p></td>");
-        } else if((i === ((this.Value - 1)/2) || i === (this.Value / 2)) && options.position === "2"){
-          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
+          var col = $("<td> <p class=number>"+value+"</p></td>");
+        } else if(i === (value - 1) && options.position === "1"){
+          var col = $("<td> <p class=number id=cell"+i+">"+value+"</p></td>");
+        } else if((i === ((value - 1)/2) || i === (value / 2)) && options.position === "2"){
+          var col = $("<td> <p class=number>"+value+"</p></td>");
         } else {
           var col = $("<td />");
         }
@@ -276,8 +189,30 @@ $(document).ready(function(){
 
         (col).addClass("bar" + index);
         row.append(col);
-        table.append(row);
-    }
+
+        }
+        return table.append(row);
+      }
+
+
+
+
+      // for(var i = 0; i < this.Value2; i++) {
+
+      //     if(i === 0 && options.position === "3"){
+      //     var col = $("<td> <p class=number>"+this.Value2+"</p></td>");
+      //   } else if(i === (this.Value - 1) && options.position === "1"){
+      //     var col = $("<td> <p class=number id=cell"+i+">"+this.Value2+"</p></td>");
+      //   } else if((i === ((this.Value2 - 1)/2) || i === (this.Value2 / 2)) && options.position === "2"){
+      //     var col = $("<td> <p class=number>"+this.Value2+"</p></td>");
+      //   } else {
+      //     var col = $("<td />");
+      //   }
+
+      //   (col).addClass("bar" + index);
+      //   row.append(col);
+      // }
+
 
 
 
@@ -391,11 +326,22 @@ $(document).ready(function(){
 
     }
 
-//Start Over Button
+    //Start Over Button
     $("#startOver").click(function(){
       if(confirm("Start Over?")){
         location.reload();
       }
     })
 
+  })
+
 });
+
+
+  function selectNumbers(qty, container){
+    var select = "";
+    for(var k = 1; k <= qty; k++) {
+      select += "<option val=" + k + ">" + k + "<option/>";
+    }
+    $(container).html(select);
+  }
