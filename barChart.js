@@ -186,11 +186,15 @@ $(document).ready(function(){
 
       //Bars
 
-      var firstBar = createBars(this.Value);
-      var secondBar = createBars(this.Value2);
-      var thirdBar = createBars(this.Value3);
+      var firstBar = createBars(this.Value, 1);
+      if(this.Value2 !== undefined){
+        var secondBar = createBars(this.Value2, 2);
+      }
+      if (this.Value3 !== undefined) {
+        var thirdBar = createBars(this.Value3, 3);
+      }
 
-      function createBars(value){
+      function createBars(value, number){
         for(var i = 0; i < value; i++) {
 
           if(i === 0 && options.position === "3"){
@@ -207,11 +211,14 @@ $(document).ready(function(){
           (col).addClass("xAxis");
         }
 
-        (col).addClass("bar" + index);
+        (col).addClass("bar" + number);
         row.append(col);
 
         }
         table.append(row);
+
+        var colorbar = createBarColorWell(number);
+
       }
 
       //Add Spacing between bars
@@ -224,22 +231,35 @@ $(document).ready(function(){
       /*Color customization*/
 
       //BARS
-      var colorWell = document.createElement("input");
-      colorWell.setAttribute("type", "color");
-      colorWell.setAttribute("id", "colorWell" + index);
-      document.addEventListener("click", startup, false);
 
-      function startup(){
-        colorWell = document.querySelector("#colorWell" + index);
-        colorWell.addEventListener("input", updateAll, false);
-        colorWell.select();
+      function createBarColorWell(number){
+        var colorWell = document.createElement("input");
+        colorWell.setAttribute("type", "color");
+        colorWell.setAttribute("id", "colorWell" + number);
+        document.addEventListener("click", startup, false);
+
+        function startup(){
+          colorWell = document.querySelector("#colorWell" + number);
+          colorWell.addEventListener("input", updateAll, false);
+          colorWell.select();
+        }
+
+        function updateAll(event) {
+          document.querySelectorAll(".bar" + number).forEach(function(p) {
+            p.style.backgroundColor = event.target.value;
+          });
+        }
+
+        //Dom insertion - Bar Colors
+        if(index === 0){
+          $("#colors").append("<br>");
+          $("#colors").append("<br>");
+          $("#colors").append(colorWell);
+          $("#colors").append("<br>");
+        }
       }
 
-      function updateAll(event) {
-        document.querySelectorAll(".bar" + index).forEach(function(p) {
-          p.style.backgroundColor = event.target.value;
-        });
-      }
+
 
       //Labels
       var colorWellLabels = document.createElement("input");
@@ -292,13 +312,6 @@ $(document).ready(function(){
       labelColorLabel.setAttribute("for", label);
       var nameLabelLabel = document.createTextNode(this.Label);
 
-
-      //Dom insertion - Bar Colors
-      $("#colors").append("<br>");
-      $("#colors").append(nameLabel);
-      $("#colors").append("<br>");
-      $("#colors").append(colorWell);
-      $("#colors").append("<br>");
 
       //DOM insertion - Label Colors
       $("#colorLabels").append("<br>");
