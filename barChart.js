@@ -87,7 +87,7 @@ $(document).ready(function(){
       var label2 = $("#multipleValueLabel2").val();
       var label3 = $("#multipleValueLabel3").val();
 
-      var options = {title: title, titleSize: titleSize, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
+      var options = {title: title, titleSize: titleSize, height: "400px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
       var barChart = drawBarChart(data, options, $("#barChart"));
     });
 
@@ -113,11 +113,11 @@ $(document).ready(function(){
 
         $.each(data, function(index, value){
 
-          if(this.Value === undefined){
-            this.Value = 0;
-          } else if(this.Value2 === undefined){
+          if(this.Value2 === undefined){
             this.Value2 = 0;
-          }else if(this.Value3 === undefined){
+          }
+
+          if(this.Value3 === undefined){
             this.Value3 = 0;
           }
 
@@ -135,9 +135,9 @@ $(document).ready(function(){
       //Y-AXIS
 
       var gap = 1;
-      if (maxValue <= 10){
+      if (maxValue > 10 && maxValue <= 20){
         gap = 2;
-      } else if(maxValue > 10 && maxValue <= 100){
+      } else if(maxValue > 20 && maxValue <= 100){
         gap = 3;
       } else if(maxValue > 100 && maxValue <= 500){
         gap = 4;
@@ -159,7 +159,7 @@ $(document).ready(function(){
             break;
 
             case 2:
-            if (j % 2 === 0){
+            if (j % 5 === 0){
               var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
               yAxis.append(yAxisTd);
             }
