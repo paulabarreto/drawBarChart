@@ -26,6 +26,22 @@ $(document).ready(function(){
       var valueQty = $("#valueQty").val();
       var valQtyBar = $("#valQtyBar").val();
 
+      //Input Boxes for multiple values label
+
+      for(var p = 1; p <= valQtyBar; p++){
+        var multipleValueLabel = document.createElement("input");
+        multipleValueLabel.setAttribute("type", "text");
+        multipleValueLabel.setAttribute("id", "multipleValueLabel" + p);
+        var mvLabel = document.createElement("label");
+        mvLabel.setAttribute("for", 'multipleValueLabel' + p);
+        var mvName = document.createTextNode("Multiple Value Label "+p+": ");
+        $("#inputVal").append(mvName);
+        $("#inputVal").append(multipleValueLabel);
+        $("#inputVal").append("<br>");
+        $("#inputVal").append("<br>");
+      }
+
+      //Input boxes for Values
       for(var j = 0; j < valueQty; j++){
         for (var l = 0; l < valQtyBar; l++){
           var inputValue = document.createElement("input");
@@ -38,7 +54,7 @@ $(document).ready(function(){
           $("#inputVal").append(inputValue);
           $("#inputVal").append("<br>");
         }
-        //Labels for values
+        //Input boxes for labels
         var inputValueLabel = document.createElement("input");
         inputValueLabel.setAttribute("type", "text");
         inputValueLabel.setAttribute("id", "valLabel" + j);
@@ -67,7 +83,11 @@ $(document).ready(function(){
       var barSpacing = $("#selectBarSpacing").val();
       var title = $("#title").val();
       var titleSize = $("#titleSize").val();
-      var options = {title: title, titleSize: titleSize, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
+      var label1 = $("#multipleValueLabel1").val();
+      var label2 = $("#multipleValueLabel2").val();
+      var label3 = $("#multipleValueLabel3").val();
+
+      var options = {title: title, titleSize: titleSize, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
       var barChart = drawBarChart(data, options, $("#barChart"));
     });
 
@@ -187,10 +207,10 @@ $(document).ready(function(){
       //Bars
 
       var firstBar = createBars(this.Value, 1);
-      if(this.Value2 !== undefined){
+      if(this.Value2 !== 0){
         var secondBar = createBars(this.Value2, 2);
       }
-      if (this.Value3 !== undefined) {
+      if(this.Value3 !== 0){
         var thirdBar = createBars(this.Value3, 3);
       }
 
@@ -250,9 +270,18 @@ $(document).ready(function(){
           });
         }
 
+        if(number == 1){
+          var newLabel = options.label1;
+        } else if (number == 2){
+          var newLabel = options.label2;
+        }else if(number == 3){
+          var newLabel = options.label3
+        }
+
         //Dom insertion - Bar Colors
         if(index === 0){
           $("#colors").append("<br>");
+          $("#colors").append(newLabel);
           $("#colors").append("<br>");
           $("#colors").append(colorWell);
           $("#colors").append("<br>");
