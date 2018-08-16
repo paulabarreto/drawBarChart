@@ -85,10 +85,30 @@ $(document).ready(function(){
       addTitle.addClass("chartTitle");
       element.append(addTitle);
 
+      //Finding maximum value to build Y-Axis
+
+      var array = [];
+
       $.each(data, function(index, value) {
 
-        var maxValue =  Math.max.apply(Math, data.map(function(o){
-          return o.Value;
+        $.each(data, function(index, value){
+
+          if(this.Value === undefined){
+            this.Value = 0;
+          } else if(this.Value2 === undefined){
+            this.Value2 = 0;
+          }else if(this.Value3 === undefined){
+            this.Value3 = 0;
+          }
+
+          var values = [parseInt(this.Value), parseInt(this.Value2), parseInt(this.Value3)];
+          var reducer = (a, b) => a + b;
+          var sum = values.reduce(reducer);
+          array.push(sum);
+        });
+
+        var maxValue =  Math.max.apply(Math, array.map(function(o){
+          return o;
         }))
 
 
@@ -193,28 +213,6 @@ $(document).ready(function(){
         }
         return table.append(row);
       }
-
-
-
-
-      // for(var i = 0; i < this.Value2; i++) {
-
-      //     if(i === 0 && options.position === "3"){
-      //     var col = $("<td> <p class=number>"+this.Value2+"</p></td>");
-      //   } else if(i === (this.Value - 1) && options.position === "1"){
-      //     var col = $("<td> <p class=number id=cell"+i+">"+this.Value2+"</p></td>");
-      //   } else if((i === ((this.Value2 - 1)/2) || i === (this.Value2 / 2)) && options.position === "2"){
-      //     var col = $("<td> <p class=number>"+this.Value2+"</p></td>");
-      //   } else {
-      //     var col = $("<td />");
-      //   }
-
-      //   (col).addClass("bar" + index);
-      //   row.append(col);
-      // }
-
-
-
 
 
       //Add Spacing between bars
