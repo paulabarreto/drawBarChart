@@ -211,9 +211,8 @@ $(document).ready(function(){
         row.append(col);
 
         }
-        return table.append(row);
+        table.append(row);
       }
-
 
       //Add Spacing between bars
       if(options.barSpacing === "2"){
