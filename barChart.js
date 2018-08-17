@@ -320,7 +320,6 @@ $("#createVal").click(function(){
           $("#colorLabels").append("<br>");
           $("#colorLabels").append("<br>");
           $("#colorLabels").append(colorWellLabels);
-          $("#colorLabels").append("<br>");
         }
       }
 

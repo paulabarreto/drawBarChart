@@ -4,8 +4,7 @@
 This project is part of a prep work for Lighthouse Labs Web Development Bootcamp.
 
 ##Example Screenshots
-![Example 1](Example_1.png)
-![Example 1 - Legend](Example_1_Legend.png)
+![Example](Example.jpg)
 
 ##API functions
 * function drawBarChart(data, options, element)
