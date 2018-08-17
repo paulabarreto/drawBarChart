@@ -70,9 +70,9 @@ td.xAxis {
 p {
   transform: rotate(90deg);
   text-align: center;
-  font-size: small;
+  font-size: smaller;
+  vertical-align: center;
 }
-
 
  .value {
    transform: rotate(90deg);
