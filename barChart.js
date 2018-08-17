@@ -137,120 +137,123 @@ $("#createVal").click(function(){
         return o;
       }))
 
-      //Y-AXIS
-      var gap = 1;                            //Defines gap of values for y-axis
-      if (maxValue > 10 && maxValue <= 20){
-        gap = 2;
-      } else if(maxValue > 20 && maxValue <= 100){
-        gap = 3;
-      } else if(maxValue > 100 && maxValue <= 500){
-        gap = 4;
-      }
+      //Y-Axis
+      var yAxis = yAxis(maxValue, table);
+      //X-Axis
       var row = $("<tr />");
-      if(index === 0){
-        var yAxis = $("<tr />");
-        for(var j = 0; j <= maxValue; j++){
-          switch(gap){
-            case 1:
-            var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
-            yAxis.append(yAxisTd);
-            break;
-            case 2:
-            if (j % 5 === 0){
+      row.append("<th> <p class=label>"+this.Label+"</p></th>");
+      //Bars
+      var firstBar = createBars(this.Value, 1);
+      if(this.Value2 !== 0){
+        var secondBar = createBars(this.Value2, 2);
+      }
+      if(this.Value3 !== 0){
+        var thirdBar = createBars(this.Value3, 3);
+      }
+      //Add Spacing between bars
+      if(options.barSpacing === "2"){
+        var space = $("<td class=space />");
+        table.append(space);
+      }
+      //Label Colour customization
+      var labelColours = createLabelColourWell(this.Label);
+      //Title Colour
+      var title = document.querySelector(".chartTitle");
+      var titleColours = createTitleColorWell(title);
+
+      function yAxis(maxValue, table){
+        //Gap of values
+        var gap = 1;
+        if (maxValue > 10 && maxValue <= 20){
+          gap = 2;
+        } else if(maxValue > 20 && maxValue <= 100){
+          gap = 3;
+        } else if(maxValue > 100 && maxValue <= 500){
+          gap = 4;
+        }
+        //Y axis row
+        var row = $("<tr />");
+        if(index === 0){
+          var yAxis = $("<tr />");
+          for(var j = 0; j <= maxValue; j++){
+            switch(gap){
+              case 1:
               var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
               yAxis.append(yAxisTd);
+              break;
+              case 2:
+              if (j % 5 === 0){
+                var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+                yAxis.append(yAxisTd);
+              }
+              else {
+                var yAxisTd = $("<td class=yAxisN/>");
+                yAxis.append(yAxisTd);
+              }
+              break;
+              case 3:
+              if (j % 10 === 0){
+                var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+                yAxis.append(yAxisTd);
+              }
+              else {
+                var yAxisTd = $("<td class=yAxisN/>");
+                yAxis.append(yAxisTd);
+              }
+              break;
+              case 4:
+              if (j % 100 === 0){
+                var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+                yAxis.append(yAxisTd);
+              }
+              else{
+                var yAxisTd = $("<td class=yAxisN/>");
+                yAxis.append(yAxisTd);
+              }
             }
-            else {
-              var yAxisTd = $("<td class=yAxisN/>");
-              yAxis.append(yAxisTd);
-            }
-            break;
-            case 3:
-            if (j % 10 === 0){
-              var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
-              yAxis.append(yAxisTd);
-            }
-            else {
-              var yAxisTd = $("<td class=yAxisN/>");
-              yAxis.append(yAxisTd);
-            }
-            break;
-          case 4:
-          if (j % 100 === 0){
-            var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
-            yAxis.append(yAxisTd);
           }
-          else{
-            var yAxisTd = $("<td class=yAxisN/>");
-            yAxis.append(yAxisTd);
-          }
+          table.append(yAxis);
         }
       }
-      table.append(yAxis);
-    }
 
-    //X-Axis
-    var row = $("<tr />");
-    row.append("<th> <p class=label"+index+">"+this.Label+"</p></th>");
+      function createBars(value, number){
+        for(var i = 0; i < value; i++) {
+          if(i === 0 && options.position === "3"){
+            var col = $("<td> <p class=number>"+value+"</p></td>");
+          } else if(i === (value - 1) && options.position === "1"){
+            var col = $("<td> <p class=number id=cell"+i+">"+value+"</p></td>");
+          } else if((i === ((value - 1)/2) || i === (value / 2)) && options.position === "2"){
+            var col = $("<td> <p class=number>"+value+"</p></td>");
+          } else {
+            var col = $("<td />");
+          }
 
-    //Bars
-    var firstBar = createBars(this.Value, 1);
-    if(this.Value2 !== 0){
-      var secondBar = createBars(this.Value2, 2);
-    }
-    if(this.Value3 !== 0){
-      var thirdBar = createBars(this.Value3, 3);
-    }
-    function createBars(value, number){
-      for(var i = 0; i < value; i++) {
-        if(i === 0 && options.position === "3"){
-          var col = $("<td> <p class=number>"+value+"</p></td>");
-        } else if(i === (value - 1) && options.position === "1"){
-          var col = $("<td> <p class=number id=cell"+i+">"+value+"</p></td>");
-        } else if((i === ((value - 1)/2) || i === (value / 2)) && options.position === "2"){
-          var col = $("<td> <p class=number>"+value+"</p></td>");
-        } else {
-          var col = $("<td />");
+          if(i === 0){
+            (col).addClass("xAxis");
+          }
+          (col).addClass("bar" + number);
+          row.append(col);
         }
-
-        if(i === 0){
-          (col).addClass("xAxis");
-        }
-
-        (col).addClass("bar" + number);
-        row.append(col);
+        table.append(row);
+        //Bar colour customization
+        var colorbar = createBarColorWell(number);
       }
-      table.append(row);
-      var colorbar = createBarColorWell(number);
-    }
 
-    //Add Spacing between bars
-    if(options.barSpacing === "2"){
-      var space = $("<td class=space />");
-      table.append(space);
-    }
-
-      //Color customization
-
-      //BARS
       function createBarColorWell(number){
         var colorWell = document.createElement("input");
         colorWell.setAttribute("type", "color");
         colorWell.setAttribute("id", "colorWell" + number);
         document.addEventListener("click", startup, false);
-
         function startup(){
           colorWell = document.querySelector("#colorWell" + number);
           colorWell.addEventListener("input", updateAll, false);
           colorWell.select();
         }
-
         function updateAll(event) {
           document.querySelectorAll(".bar" + number).forEach(function(p) {
             p.style.backgroundColor = event.target.value;
           });
         }
-
         if(number == 1){
           var newLabel = options.label1;
         } else if (number == 2){
@@ -258,7 +261,6 @@ $("#createVal").click(function(){
         }else if(number == 3){
           var newLabel = options.label3
         }
-
       //Dom insertion - Bar Colors
         if(index === 0){
           $("#colors").append("<br>");
@@ -269,65 +271,58 @@ $("#createVal").click(function(){
         }
       }
 
-      //Labels
-      var colorWellLabels = document.createElement("input");
-      colorWellLabels.setAttribute("type", "color");
-      colorWellLabels.setAttribute("id", "colorWellLabels" + index);
-      document.addEventListener("click", startupLabels, false);
+      function createTitleColorWell(title){
+        if(index === 0){
+          var colorWellTitle = document.createElement("input");
+          colorWellTitle.setAttribute("type", "color");
+          colorWellTitle.setAttribute("id", "colorWellTitle");
 
-      function startupLabels(){
-        colorWellLabels = document.querySelector("#colorWellLabels" + index);
-        colorWellLabels.addEventListener("input", updateFirst, false);
-        colorWellLabels.select();
-      }
-      function updateFirst(event) {
-        var l = document.querySelector(".label" + index);
-        if(l){
-          l.style.color = event.target.value;
-        }
-      }
+          document.addEventListener("click", startupTitle, false);
+          function startupTitle(){
+            colorWellTitle = document.querySelector("#colorWellTitle");
+            colorWellTitle.addEventListener("input", updateTitle, false);
+            colorWellTitle.select();
+          }
 
-      //Title Colour
-      if(index === 0){
-        var colorWellTitle = document.createElement("input");
-        colorWellTitle.setAttribute("type", "color");
-        colorWellTitle.setAttribute("id", "colorWellTitle");
-
-        document.addEventListener("click", startupTitle, false);
-        function startupTitle(){
-          colorWellTitle = document.querySelector("#colorWellTitle");
-          colorWellTitle.addEventListener("input", updateTitle, false);
-          colorWellTitle.select();
-        }
-
-        function updateTitle(event) {
-          var title = document.querySelector(".chartTitle");
-          if(title){
+          function updateTitle(event) {
             title.style.color = event.target.value;
           }
+          //DOM insertion - Title Colors
+          $("#titleDiv").append("Title Colour: ");
+          $("#titleDiv").append("<br>");
+          $("#titleDiv").append("<br>");
+          $("#titleDiv").append(colorWellTitle);
         }
       }
 
-      //Labels for Bar Color Picker
-      var colorLabel = document.createElement("label");
-      labelLabel.setAttribute("for", label);
-      var nameLabel = document.createTextNode(this.Label);
+      function createLabelColourWell(){
+        if(index === 0){
+          var colorWellLabels = document.createElement("input");
+          colorWellLabels.setAttribute("type", "color");
+          colorWellLabels.setAttribute("id", "colorWellLabels");
+          document.addEventListener("click", startupLabels, false);
 
-      //Labels for Label Color Picker
-      var labelColorLabel = document.createElement("label");
-      labelColorLabel.setAttribute("for", label);
-      var nameLabelLabel = document.createTextNode(this.Label);
+          function startupLabels(){
+            colorWellLabels = document.querySelector("#colorWellLabels");
+            colorWellLabels.addEventListener("input", updateAll, false);
+            colorWellLabels.select();
+          }
+          function updateAll(event) {
+            document.querySelectorAll(".label").forEach(function(p) {
+              p.style.color = event.target.value;
+            });
+          }
+          //Title for Label Color Picker
+          var nameLabelLabel = document.createTextNode("Label Colour: ");
 
-      //DOM insertion - Label Colors
-      $("#colorLabels").append("<br>");
-      $("#colorLabels").append(nameLabelLabel);
-      $("#colorLabels").append("<br>");
-      $("#colorLabels").append(colorWellLabels);
-      $("#colorLabels").append("<br>");
-
-      //DOM insertion - Title Colors
-      $("#titleDiv").append("<br>");
-      $("#titleDiv").append(colorWellTitle);
+          //DOM insertion - Label Colors
+          $("#colorLabels").append(nameLabelLabel);
+          $("#colorLabels").append("<br>");
+          $("#colorLabels").append("<br>");
+          $("#colorLabels").append(colorWellLabels);
+          $("#colorLabels").append("<br>");
+        }
+      }
 
     });
 

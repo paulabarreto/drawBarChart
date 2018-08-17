@@ -11,10 +11,9 @@ h5 {
 }
 
 #barChart {
-  margin: auto;
+  margin: 100px;
   width: 50%;
 }
-
 
 table {
   border-collapse: collapse;
@@ -78,8 +77,6 @@ p {
    transform: rotate(90deg);
    color: red;
  }
-
-
 
 .container{
     display: flex;
