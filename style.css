@@ -14,7 +14,6 @@ h5 {
   margin: 100px;
   width: 50%;
 }
-
 table {
   border-collapse: collapse;
   transform: rotate(-90deg);
@@ -77,6 +76,7 @@ p {
    transform: rotate(90deg);
    color: red;
  }
+
 
 .container{
     display: flex;
