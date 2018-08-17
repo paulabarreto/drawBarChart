@@ -141,7 +141,7 @@ $("#createVal").click(function(){
       var yAxis = yAxis(maxValue, table);
       //X-Axis
       var row = $("<tr />");
-      row.append("<th> <p class=label"+index+">"+this.Label+"</p></th>");
+      row.append("<th> <p class=label>"+this.Label+"</p></th>");
       //Bars
       var firstBar = createBars(this.Value, 1);
       if(this.Value2 !== 0){
@@ -155,6 +155,11 @@ $("#createVal").click(function(){
         var space = $("<td class=space />");
         table.append(space);
       }
+      //Label Colour customization
+      var labelColours = createLabelColourWell(this.Label);
+      //Title Colour
+      var title = document.querySelector(".chartTitle");
+      var titleColours = createTitleColorWell(title);
 
       function yAxis(maxValue, table){
         //Gap of values
@@ -233,11 +238,6 @@ $("#createVal").click(function(){
         //Bar colour customization
         var colorbar = createBarColorWell(number);
       }
-      //Label Colour customization
-      var labelColours = createLabelColours(this.Label);
-      //Title Colour
-      var title = document.querySelector(".chartTitle");
-      var titleColours = createTitleColorWell(title);
 
       function createBarColorWell(number){
         var colorWell = document.createElement("input");
@@ -271,34 +271,6 @@ $("#createVal").click(function(){
         }
       }
 
-      function createLabelColours(label){
-        var colorWellLabels = document.createElement("input");
-        colorWellLabels.setAttribute("type", "color");
-        colorWellLabels.setAttribute("id", "colorWellLabels" + index);
-        document.addEventListener("click", startupLabels, false);
-
-        function startupLabels(){
-          colorWellLabels = document.querySelector("#colorWellLabels" + index);
-          colorWellLabels.addEventListener("input", updateFirst, false);
-          colorWellLabels.select();
-        }
-        function updateFirst(event) {
-          var l = document.querySelector(".label" + index);
-          if(l){
-            l.style.color = event.target.value;
-          }
-        }
-        //Labels for Label Color Picker
-        var nameLabelLabel = document.createTextNode(label);
-
-        //DOM insertion - Label Colors
-        $("#colorLabels").append("<br>");
-        $("#colorLabels").append(nameLabelLabel);
-        $("#colorLabels").append("<br>");
-        $("#colorLabels").append(colorWellLabels);
-        $("#colorLabels").append("<br>");
-      }
-
       function createTitleColorWell(title){
         if(index === 0){
           var colorWellTitle = document.createElement("input");
@@ -313,17 +285,44 @@ $("#createVal").click(function(){
           }
 
           function updateTitle(event) {
-            if(title){
-              title.style.color = event.target.value;
-            }
+            title.style.color = event.target.value;
           }
         }
         //DOM insertion - Title Colors
         $("#titleDiv").append("<br>");
         $("#titleDiv").append(colorWellTitle);
       }
+      function createLabelColourWell(label){
+        if(index === 0){
+          var colorWellLabels = document.createElement("input");
+          colorWellLabels.setAttribute("type", "color");
+          colorWellLabels.setAttribute("id", "colorWellLabels" + index);
+          document.addEventListener("click", startupLabels, false);
+
+          function startupLabels(){
+            colorWellLabels = document.querySelector("#colorWellLabels" + index);
+            colorWellLabels.addEventListener("input", updateAll, false);
+            colorWellLabels.select();
+          }
+          function updateAll(event) {
+            document.querySelectorAll(".label").forEach(function(p) {
+              p.style.color = event.target.value;
+            });
+          }
+          //Labels for Label Color Picker
+          var nameLabelLabel = document.createTextNode(label);
+
+          //DOM insertion - Label Colors
+          $("#colorLabels").append("<br>");
+          $("#colorLabels").append(nameLabelLabel);
+          $("#colorLabels").append("<br>");
+          $("#colorLabels").append(colorWellLabels);
+          $("#colorLabels").append("<br>");
+        }    
+      }
 
     });
+
     element.append(table);
     return element;
   }

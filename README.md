@@ -11,10 +11,18 @@ This project is part of a prep work for Lighthouse Labs Web Development Bootcamp
 * function drawBarChart(data, options, element)
   * Data - Values and Labels
   * Options - Bar Chart Size, Title, Title Size, Position of values inside bar, space between bars and labels for each colour.
+
 * function createBars(value, number)
   * With values and numbers the bars are created
+
 * function createBarColorWell(number)
   * Colour picker is created for each number on bar chart.
+
+* function createLabelColourWell(label)
+  * Colour picker is created for each label
+
+* function createTitleColorWell(title)
+  Colour picker is created for the title
 
 ##Feature list
 * Stacked bar chart
@@ -23,7 +31,7 @@ This project is part of a prep work for Lighthouse Labs Web Development Bootcamp
 * Customized title size and colour
 
 ##Known Issues
-* Graph is not well displayed if values are well over 100.
+* Graph is not well displayed if values are over 100.
 * Values and labels are not well contained inside of cells.
 
 ##Features on the roadmap
