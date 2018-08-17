@@ -10,16 +10,68 @@
 
     <label for="valueQty">Items: </label>
     <select id="valueQty"></select>
+
+    <br><br>
+
+    <label for="valQtyBar">Values per Bar: </label>
+    <select id="valQtyBar"></select>
+
+    <br><br>
+
+    <label for="tile">Bar Chart Title: </label>
+    <input type=text id="title">
+
+    <label for="titleSize">Title Size</label>
+    <select id="titleSize">
+      <option value="1" name="xxSmall">8pt</option>
+      <option value="2" name="xSmall">10pt</option>
+      <option value="3" name="small">12pt</option>
+      <option value="4" name="medium">16pt</option>
+      <option value="5" name="large">18pt</option>
+      <option value="6" name="xLarge">20pt</option>
+      <option value="7" name="xxLarge">22pt</option>
+    </select>
+
+    <br><br>
+
+    <label for="selectPosition">Position of values inside bar: </label>
+    <select id="selectPosition">
+      <option value="1">Top</option>
+      <option value="2">Centre</option>
+      <option value="3">Bottom</option>
+    </select>
+
+    <br><br>
+
+    <label for="selectBarSpacing">Bar Spacing: </label>
+    <select id="selectBarSpacing">
+      <option value="1">None</option>
+      <option value="2">Space</option>
+    </select>
+
+    <br><br><br>
+
+    <button id="createVal">Create</button>
+
+
     <script src="barChart.js"></script>
     <div id="inputVal"></div>
     <button id="startOver">Start Over</button>
     <button id="submit">Submit</button><br><br>
+
     <div id="barChart"></div>
+
     <div class="container">
       <div id="colors" class="fixed">
-        <h4>Bar Colors:</h4>
+        <h4>Bar Color:</h4>
       </div>
+
       <div class="flex-item" id="colorLabels">
-        <h4>Label Colors: </h4>
+        <h4>Label Color: </h4>
       </div>
+
+      <div class="flex-item" id="titleDiv">
+        <h4>Title: </h4>
+      </div>
+
   </body>

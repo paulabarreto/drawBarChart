@@ -1,26 +1,12 @@
 "use strict";
 
+//Elements on the Page for assembling data
 $(document).ready(function(){
-
 //Button for selecting how many values for bar chart
-  var select = "";
-  for(var k = 0; k < 50; k++) {
-    select += "<option val=" + k + ">" + k + "<option/>";
-  }
-  $("#valueQty").html(select);
-
-  var title = document.createElement("input");
-  title.setAttribute("type", "text");
-  title.setAttribute("id", "title");
-  var titleLabel = document.createElement("label");
-  titleLabel.setAttribute("for", "title");
-  var labelTitleName = document. createTextNode("Bar Chart Title: ");
-  $(titleLabel).append(labelTitleName);
-  $("#inputVal").append(titleLabel);
-  $("#inputVal").append(title);
-  $("#inputVal").append("<br><br><br>");
-
-  /*Select Items Refreshes page but keeps input there*/
+  var inputVal = selectNumbers(10, $("#valueQty"));
+//Amount of values per bar
+  var inputVal = selectNumbers(3, $("#valQtyBar"));
+  //Select Items Refreshes page but keeps input there
   $("#valueQty").change(function() {
     location.reload();
   });
@@ -30,200 +16,265 @@ $(document).ready(function(){
     var dropVal = $(this).val();
     sessionStorage.setItem("SelectedItem", dropVal);
   });
+  //Start Over Button
+  $("#startOver").click(function(){
+    if(confirm("Start Over?")){
+      location.reload();
+    }
+  })
+});
 
-  //Creates input boxes for bar chart values
-    var valueQty = $("#valueQty").val();
-    for(var j = 0; j < valueQty; j++){
-      //Values input boxes
+//Select numbers button
+function selectNumbers(qty, container){
+  var select = "";
+  for(var k = 1; k <= qty; k++) {
+    select += "<option val=" + k + ">" + k + "<option/>";
+  }
+  $(container).html(select);
+}
+
+//Creates input boxes for bar chart values
+$("#createVal").click(function(){
+  var valueQty = $("#valueQty").val();
+  var valQtyBar = $("#valQtyBar").val();
+
+  //Input Boxes for multiple values label
+  for(var p = 1; p <= valQtyBar; p++){
+    var multipleValueLabel = document.createElement("input");
+    multipleValueLabel.setAttribute("type", "text");
+    multipleValueLabel.setAttribute("id", "multipleValueLabel" + p);
+    var mvLabel = document.createElement("label");
+    mvLabel.setAttribute("for", 'multipleValueLabel' + p);
+    var mvName = document.createTextNode("Multiple Value Label "+p+": ");
+
+    $("#inputVal").append(mvName);
+    $("#inputVal").append(multipleValueLabel);
+    $("#inputVal").append("<br>");
+    $("#inputVal").append("<br>");
+  }
+
+  //Input boxes for Values
+  for(var j = 0; j < valueQty; j++){
+    for (var l = 0; l < valQtyBar; l++){
       var inputValue = document.createElement("input");
       inputValue.setAttribute("type", "text");
-      inputValue.setAttribute("id", "value" + j);
+      inputValue.setAttribute("id", "value" + j + l);
       var label = document.createElement("label");
-      label.setAttribute("for", "value" + j);
+      label.setAttribute("for", "value" + j + l);
       var name = document.createTextNode("Value: ");
+
       $("#inputVal").append(name);
       $("#inputVal").append(inputValue);
       $("#inputVal").append("<br>");
-
-      //Labels for values
-      var inputValueLabel = document.createElement("input");
-      inputValueLabel.setAttribute("type", "text");
-      inputValueLabel.setAttribute("id", "valLabel" + j);
-      var labelLabel = document.createElement("label");
-      labelLabel.setAttribute("for", "valLabel" + j);
-      var nameLabel = document.createTextNode("  Label: ");
-      $("#inputVal").append(nameLabel);
-      $("#inputVal").append(inputValueLabel);
-
-      $("#inputVal").append("<br>"+"<br>");
-
     }
-    $("#inputVal").append("<br>");
+    //Input boxes for labels
+    var inputValueLabel = document.createElement("input");
+    inputValueLabel.setAttribute("type", "text");
+    inputValueLabel.setAttribute("id", "valLabel" + j);
+    var labelLabel = document.createElement("label");
+    labelLabel.setAttribute("for", "valLabel" + j);
+    var nameLabel = document.createTextNode("  Label: ");
 
-    //Select Position of values
-    var selectPosition = document.createElement("select");
-    selectPosition.setAttribute("id", "selectPosition");
-    var positionLabel = document.createElement("label");
-    positionLabel.setAttribute("for", "selectPosition");
-    var namePositionLabel = document.createTextNode("Position: ");
-    $("#inputVal").append(namePositionLabel);
-    $("#inputVal").append(positionLabel);
-    var top = document.createElement("option");
-    var centre = document.createElement("option");
-    var bottom = document.createElement("option");
-    top.value = "1";
-    top.text = "Top";
-    centre.value = "2";
-    centre.text = "Centre";
-    bottom.value = "3";
-    bottom.text = "Bottom";
-    selectPosition.add(top);
-    selectPosition.add(centre);
-    selectPosition.add(bottom);
-    $("#inputVal").append(selectPosition);
-    $("#inputVal").append("<br>");
-    $("#inputVal").append("<br>");
+    $("#inputVal").append(nameLabel);
+    $("#inputVal").append(inputValueLabel);
+    $("#inputVal").append("<br>"+"<br>");
+  }
+  $("#inputVal").append("<br>");
+  $("#inputVal").append("<br>");
 
-    //Bar Spacing
-    var selectBarSpacing = document.createElement("select");
-    selectBarSpacing.setAttribute("id", "selectBarSpacing");
-    var spacingLabel = document.createElement("label");
-    spacingLabel.setAttribute("for", "selectBarSpacing");
-    var nameSpacingLabel = document.createTextNode("Bar Spacing: ");
-    $("#inputVal").append(nameSpacingLabel);
-    $("#inputVal").append(spacingLabel);
-    var none = document.createElement("option");
-    var single = document.createElement("option");
-    var double = document.createElement("option");
-    none.value = "1";
-    none.text = "None";
-    single.value = "2";
-    single.text = "Space";
-
-    selectBarSpacing.add(none);
-    selectBarSpacing.add(single);
-    $("#inputVal").append(selectBarSpacing);
-
-/*Creates array for bar chart data*/
+  //Creates array for bar chart data
   $("#submit").click(function(){
     $(this).attr('disabled', 'disabled');         //Disable submit after 1st submission
     var data = [];
-    for(var k = 0; k < 50; k++){
-      if($("#value" + k).val() !== undefined){
-        data.push({Value: $("#value" + k).val(), Label: $("#valLabel" + k).val()});
+    for(var k = 0; k < 10; k++){
+      if($("#value" + k + 0).val() !== undefined){
+        data.push({Value: $("#value" + k + 0).val(), Value2: $("#value" + k + 1).val(), Value3: $("#value" + k + 2).val(), Label: $("#valLabel" + k).val()});
       }
     }
+    //Extracts data from input
     var selectedPosition = $("#selectPosition").val();
     var barSpacing = $("#selectBarSpacing").val();
     var title = $("#title").val();
-    var options = {title: title, height: "200px", width: "200px", position: selectedPosition, barSpacing: barSpacing};
+    var titleSize = $("#titleSize").val();
+    var label1 = $("#multipleValueLabel1").val();
+    var label2 = $("#multipleValueLabel2").val();
+    var label3 = $("#multipleValueLabel3").val();
+
+    //Creates options parameter from extratcted data
+    var options = {title: title, titleSize: titleSize, height: "400px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
 
-//Bar chart is designed
+  //Bar chart is designed
   function drawBarChart(data, options, element) {
-
     var table = $("<table id=table />");
     $(table).height(options.height);
     $(table).width(options.width);
+    var title = options.title;
+    var newTitle = title.fontsize(options.titleSize);
+    var addTitle = $("<h2>&emsp;&emsp;&emsp;"+newTitle+"</h2>");
+    addTitle.addClass("chartTitle");
+    element.append(addTitle);
 
-
+    //Finding maximum value to build Y-Axis
+    var array = [];
     $.each(data, function(index, value) {
+      $.each(data, function(index, value){
 
-      var maxValue =  Math.max.apply(Math, data.map(function(o){
-        return o.Value;
+        if(this.Value2 === undefined){
+          this.Value2 = 0;
+        }
+        if(this.Value3 === undefined){
+          this.Value3 = 0;
+        }
+        //Finds sum of values to build y-axis
+        var values = [parseInt(this.Value), parseInt(this.Value2), parseInt(this.Value3)];
+        var reducer = (a, b) => a + b;
+        var sum = values.reduce(reducer);
+        array.push(sum);
+      });
+      var maxValue =  Math.max.apply(Math, array.map(function(o){
+        return o;
       }))
 
-      //Y-Axis
+      //Y-AXIS
+      var gap = 1;                            //Defines gap of values for y-axis
+      if (maxValue > 10 && maxValue <= 20){
+        gap = 2;
+      } else if(maxValue > 20 && maxValue <= 100){
+        gap = 3;
+      } else if(maxValue > 100 && maxValue <= 500){
+        gap = 4;
+      }
+      var row = $("<tr />");
       if(index === 0){
-        var yAxis = $("<tr class=yAxis/>");
-
-        for(j = 0; j <= maxValue; j++){
-          if(maxValue > 0 && maxValue <= 10){
-            yAxis.append("<td class=yAxis> <p>"+j+"____</p></td>");
-          } else if (maxValue > 10 && maxValue <= 20){
-            if(j === 0 || j % 5 === 0){
-              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
-            } else{
-            yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+        var yAxis = $("<tr />");
+        for(var j = 0; j <= maxValue; j++){
+          switch(gap){
+            case 1:
+            var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+            yAxis.append(yAxisTd);
+            break;
+            case 2:
+            if (j % 5 === 0){
+              var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+              yAxis.append(yAxisTd);
             }
-          } else if(maxValue > 20 && maxValue <= 50){
-            if(j === 0 || j % 10 === 0){
-              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
-            } else{
-              yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+            else {
+              var yAxisTd = $("<td class=yAxisN/>");
+              yAxis.append(yAxisTd);
             }
-          } else if(maxValue > 50 && maxValue <= 100){
-            if(j === 0 || j % 20 === 0){
-              yAxis.append("<td class=yAxis> <p>"+j+"___</p></td>");
-            } else{
-              yAxis.append("<td class=yAxis> <p>&nbsp</p></td>");
+            break;
+            case 3:
+            if (j % 10 === 0){
+              var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+              yAxis.append(yAxisTd);
             }
+            else {
+              var yAxisTd = $("<td class=yAxisN/>");
+              yAxis.append(yAxisTd);
+            }
+            break;
+          case 4:
+          if (j % 100 === 0){
+            var yAxisTd = $("<td class=yAxis> <p class=yAxis>"+j+"</p></td>");
+            yAxis.append(yAxisTd);
           }
-
-          table.append(yAxis);
+          else{
+            var yAxisTd = $("<td class=yAxisN/>");
+            yAxis.append(yAxisTd);
+          }
         }
       }
+      table.append(yAxis);
+    }
 
-      //X-Axis
-      var row = $("<tr />");
-      row.append("<th> <p class=label" + index+">"+this.Label+"</p></th>");
-      //Bars
-      for(var i = 0; i < (this.Value - 1); i++) {
+    //X-Axis
+    var row = $("<tr />");
+    row.append("<th> <p class=label"+index+">"+this.Label+"</p></th>");
+
+    //Bars
+    var firstBar = createBars(this.Value, 1);
+    if(this.Value2 !== 0){
+      var secondBar = createBars(this.Value2, 2);
+    }
+    if(this.Value3 !== 0){
+      var thirdBar = createBars(this.Value3, 3);
+    }
+    function createBars(value, number){
+      for(var i = 0; i < value; i++) {
         if(i === 0 && options.position === "3"){
-          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
-        } else if(i === (this.Value - 2) && options.position === "1"){
-          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
-        } else if((i === ((this.Value - 1)/2) || i === (this.Value / 2)) && options.position === "2"){
-          var col = $("<td> <p class=number>"+this.Value+"</p></td>");
+          var col = $("<td> <p class=number>"+value+"</p></td>");
+        } else if(i === (value - 1) && options.position === "1"){
+          var col = $("<td> <p class=number id=cell"+i+">"+value+"</p></td>");
+        } else if((i === ((value - 1)/2) || i === (value / 2)) && options.position === "2"){
+          var col = $("<td> <p class=number>"+value+"</p></td>");
         } else {
           var col = $("<td />");
         }
 
-        (col).addClass("bar" + index);
+        if(i === 0){
+          (col).addClass("xAxis");
+        }
+
+        (col).addClass("bar" + number);
         row.append(col);
-        table.append(row);
-
       }
+      table.append(row);
+      var colorbar = createBarColorWell(number);
+    }
 
+    //Add Spacing between bars
+    if(options.barSpacing === "2"){
+      var space = $("<td class=space />");
+      table.append(space);
+    }
 
-
-      //Add Spacing between bars
-      if(options.barSpacing === "2"){
-        var space = $("<td class=space />");
-        table.append(space);
-      }
-
-
-
-      /*Color customization*/
+      //Color customization
 
       //BARS
-      var colorWell = document.createElement("input");
-      colorWell.setAttribute("type", "color");
-      colorWell.setAttribute("id", "colorWell" + index);
-      document.addEventListener("click", startup, false);
-      function startup(){
-        colorWell = document.querySelector("#colorWell" + index);
-        colorWell.addEventListener("input", updateAll, false);
-        colorWell.select();
-      }
-      function updateAll(event) {
-        document.querySelectorAll(".bar" + index).forEach(function(p) {
-          p.style.backgroundColor = event.target.value;
-        });
-      }
+      function createBarColorWell(number){
+        var colorWell = document.createElement("input");
+        colorWell.setAttribute("type", "color");
+        colorWell.setAttribute("id", "colorWell" + number);
+        document.addEventListener("click", startup, false);
 
-      //Labels for Bar Color Picker
-      var colorLabel = document.createElement("label");
-      labelLabel.setAttribute("for", label);
-      var nameLabel = document.createTextNode(this.Label);
+        function startup(){
+          colorWell = document.querySelector("#colorWell" + number);
+          colorWell.addEventListener("input", updateAll, false);
+          colorWell.select();
+        }
+
+        function updateAll(event) {
+          document.querySelectorAll(".bar" + number).forEach(function(p) {
+            p.style.backgroundColor = event.target.value;
+          });
+        }
+
+        if(number == 1){
+          var newLabel = options.label1;
+        } else if (number == 2){
+          var newLabel = options.label2;
+        }else if(number == 3){
+          var newLabel = options.label3
+        }
+
+      //Dom insertion - Bar Colors
+        if(index === 0){
+          $("#colors").append("<br>");
+          $("#colors").append(newLabel);
+          $("#colors").append("<br>");
+          $("#colors").append(colorWell);
+          $("#colors").append("<br>");
+        }
+      }
 
       //Labels
       var colorWellLabels = document.createElement("input");
       colorWellLabels.setAttribute("type", "color");
       colorWellLabels.setAttribute("id", "colorWellLabels" + index);
       document.addEventListener("click", startupLabels, false);
+
       function startupLabels(){
         colorWellLabels = document.querySelector("#colorWellLabels" + index);
         colorWellLabels.addEventListener("input", updateFirst, false);
@@ -236,17 +287,36 @@ $(document).ready(function(){
         }
       }
 
+      //Title Colour
+      if(index === 0){
+        var colorWellTitle = document.createElement("input");
+        colorWellTitle.setAttribute("type", "color");
+        colorWellTitle.setAttribute("id", "colorWellTitle");
+
+        document.addEventListener("click", startupTitle, false);
+        function startupTitle(){
+          colorWellTitle = document.querySelector("#colorWellTitle");
+          colorWellTitle.addEventListener("input", updateTitle, false);
+          colorWellTitle.select();
+        }
+
+        function updateTitle(event) {
+          var title = document.querySelector(".chartTitle");
+          if(title){
+            title.style.color = event.target.value;
+          }
+        }
+      }
+
+      //Labels for Bar Color Picker
+      var colorLabel = document.createElement("label");
+      labelLabel.setAttribute("for", label);
+      var nameLabel = document.createTextNode(this.Label);
+
       //Labels for Label Color Picker
       var labelColorLabel = document.createElement("label");
       labelColorLabel.setAttribute("for", label);
       var nameLabelLabel = document.createTextNode(this.Label);
-
-      //Dom insertion - Bar Colors
-      $("#colors").append("<br>");
-      $("#colors").append(nameLabel);
-      $("#colors").append("<br>");
-      $("#colors").append(colorWell);
-      $("#colors").append("<br>");
 
       //DOM insertion - Label Colors
       $("#colorLabels").append("<br>");
@@ -255,17 +325,13 @@ $(document).ready(function(){
       $("#colorLabels").append(colorWellLabels);
       $("#colorLabels").append("<br>");
 
+      //DOM insertion - Title Colors
+      $("#titleDiv").append("<br>");
+      $("#titleDiv").append(colorWellTitle);
+
     });
 
-    return element.append(table);
-
-    }
-
-//Start Over Button
-    $("#startOver").click(function(){
-      if(confirm("Start Over?")){
-        location.reload();
-      }
-    })
-
+    element.append(table);
+    return element;
+  }
 });

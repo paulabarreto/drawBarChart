@@ -4,7 +4,17 @@ h1 {
 
 div {
   margin: 100px;
- }
+}
+
+h5 {
+  margin-left: 8px;
+}
+
+#barChart {
+  margin: auto;
+  width: 50%;
+}
+
 
 table {
   border-collapse: collapse;
@@ -12,48 +22,57 @@ table {
   table-layout: fixed;
  }
 
+ th {
+  text-align: center;
+ }
+
+
+.yAxisTitle {
+  text-align: center;
+}
+
 td {
-  color: red;
+  color: grey;
   margin-bottom: 8px;
   background-color: black;
 }
 
-.lines {
-  border: 1px solid red;
-}
-
-.yAxis {
+td.yAxis {
   background-color: white;
-  font-size: smaller;
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
   vertical-align: bottom;
   height: 0.5px;
 }
 
-.yAxisNum {
+td.yAxisN {
+  border-bottom: 1px solid grey;
   background-color: white;
-  font-size: smaller;
-  border-bottom: 1px solid red;
+}
+
+p.yAxis {
   vertical-align: bottom;
-  border-right: 1px solid red;
-  height: 0.5px;
+  font-size: xx-small;
+  margin-top: 5px;
 }
 
  td.space {
   background-color: white;
+  border-right: 1px solid grey;
+
 }
 
- p {
+td.xAxis {
+  border-left: 1px solid grey;
+}
+
+
+p {
   transform: rotate(90deg);
-  margin-right: 8px;
-  margin-bottom: 8px;
- }
-
- p.number {
-   transform: rotate(90deg);
-   font-size: small;
- }
-
+  text-align: center;
+  font-size: smaller;
+  vertical-align: center;
+}
 
  .value {
    transform: rotate(90deg);
