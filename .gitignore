@@ -1,0 +1,4 @@
+.git
+linter-eslint/
+node_modules/
+.DS_Store

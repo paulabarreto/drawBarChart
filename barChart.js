@@ -16,12 +16,35 @@ $(document).ready(function(){
     var dropVal = $(this).val();
     sessionStorage.setItem("SelectedItem", dropVal);
   });
-  //Start Over Button
-  $("#startOver").click(function(){
-    if(confirm("Start Over?")){
-      location.reload();
-    }
-  })
+
+});
+
+//Start Over Button
+$("#startOver").click(function(){
+  if(confirm("Start Over?")){
+    location.reload();
+  }
+});
+
+//Set Example Button
+$("#example").click(function(){
+  var selectedPosition = "2";
+  var barSpacing = "2";
+  var title = "Example";
+  var titleSize = "4";
+  var label1 = "Type A";
+  var label2 = "Type B";
+  var label3 = "Type C";
+
+  var data = [
+    {Value: 3, Value2: 2, Value3: 6, Label: "First"},
+    {Value: 5, Value2: 7, Value3: 4, Label: "Second"},
+    {Value: 4, Value2: 8, Value3: 9, Label: "Third"},
+    {Value: 4, Value2: 8, Value3: 2, Label: "Forth"},
+    {Value: 3, Value2: 5, Value3: 7, Label: "Fifth"}
+  ];
+  var options = {title: title, titleSize: titleSize, height: "400px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
+  var barChart = drawBarChart(data, options, $("#barChart"));
 });
 
 //Select numbers button
@@ -104,6 +127,7 @@ $("#createVal").click(function(){
     var options = {title: title, titleSize: titleSize, height: "400px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
+});
 
   //Bar chart is designed
   function drawBarChart(data, options, element) {
@@ -243,6 +267,13 @@ $("#createVal").click(function(){
         var colorWell = document.createElement("input");
         colorWell.setAttribute("type", "color");
         colorWell.setAttribute("id", "colorWell" + number);
+        if(number === 1){
+          colorWell.setAttribute("value", "#f6b73c");
+        } else if(number === 2){
+          colorWell.setAttribute("value", "#e66465");
+        } else if(number === 3){
+          colorWell.setAttribute("value", "#87CEFA");
+        }
         document.addEventListener("click", startup, false);
         function startup(){
           colorWell = document.querySelector("#colorWell" + number);
@@ -290,7 +321,6 @@ $("#createVal").click(function(){
           //DOM insertion - Title Colors
           $("#titleDiv").append("Title Colour: ");
           $("#titleDiv").append("<br>");
-          $("#titleDiv").append("<br>");
           $("#titleDiv").append(colorWellTitle);
         }
       }
@@ -312,12 +342,9 @@ $("#createVal").click(function(){
               p.style.color = event.target.value;
             });
           }
-          //Title for Label Color Picker
-          var nameLabelLabel = document.createTextNode("Label Colour: ");
 
           //DOM insertion - Label Colors
-          $("#colorLabels").append(nameLabelLabel);
-          $("#colorLabels").append("<br>");
+          $("#colorLabels").append("Label Colour: ");
           $("#colorLabels").append("<br>");
           $("#colorLabels").append(colorWellLabels);
         }
@@ -328,4 +355,3 @@ $("#createVal").click(function(){
     element.append(table);
     return element;
   }
-});
