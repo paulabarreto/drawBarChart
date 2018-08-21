@@ -28,7 +28,17 @@ table {
 td {
   color: grey;
   margin-bottom: 8px;
-  background-color: black;
+}
+.bar1{
+  background-color: #f6b73c;
+}
+
+.bar2 {
+  background-color: #e66465;
+}
+
+.bar3 {
+  background-color: #87CEFA;
 }
 
 td.yAxis {

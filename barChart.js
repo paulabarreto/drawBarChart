@@ -17,7 +17,17 @@ $(document).ready(function(){
     sessionStorage.setItem("SelectedItem", dropVal);
   });
 
-  //Example Bar chart at opening
+});
+
+//Start Over Button
+$("#startOver").click(function(){
+  if(confirm("Start Over?")){
+    location.reload();
+  }
+});
+
+//Set Example Button
+$("#example").click(function(){
   var selectedPosition = "2";
   var barSpacing = "2";
   var title = "Example";
@@ -27,22 +37,14 @@ $(document).ready(function(){
   var label3 = "Type C";
 
   var data = [
-    {Value: 10, Value2: 20, Value3: 30, Label: "First"},
-    {Value: 5, Value2: 15, Value3: 20, Label: "Second"},
-    {Value: 4, Value2: 8, Value3: 16, Label: "Third"},
-    {Value: 1, Value2: 15, Value3: 2, Label: "Forth"},
-    {Value: 11, Value2: 22, Value3: 7, Label: "Fifth"}
+    {Value: 3, Value2: 2, Value3: 6, Label: "First"},
+    {Value: 5, Value2: 7, Value3: 4, Label: "Second"},
+    {Value: 4, Value2: 8, Value3: 9, Label: "Third"},
+    {Value: 4, Value2: 8, Value3: 2, Label: "Forth"},
+    {Value: 3, Value2: 5, Value3: 7, Label: "Fifth"}
   ];
   var options = {title: title, titleSize: titleSize, height: "400px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
   var barChart = drawBarChart(data, options, $("#barChart"));
-
-});
-
-//Start Over Button
-$("#startOver").click(function(){
-  if(confirm("Start Over?")){
-    location.reload();
-  }
 });
 
 //Select numbers button
@@ -265,6 +267,13 @@ $("#createVal").click(function(){
         var colorWell = document.createElement("input");
         colorWell.setAttribute("type", "color");
         colorWell.setAttribute("id", "colorWell" + number);
+        if(number === 1){
+          colorWell.setAttribute("value", "#f6b73c");
+        } else if(number === 2){
+          colorWell.setAttribute("value", "#e66465");
+        } else if(number === 3){
+          colorWell.setAttribute("value", "#87CEFA");
+        }
         document.addEventListener("click", startup, false);
         function startup(){
           colorWell = document.querySelector("#colorWell" + number);
