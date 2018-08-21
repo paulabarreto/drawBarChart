@@ -16,12 +16,33 @@ $(document).ready(function(){
     var dropVal = $(this).val();
     sessionStorage.setItem("SelectedItem", dropVal);
   });
-  //Start Over Button
-  $("#startOver").click(function(){
-    if(confirm("Start Over?")){
-      location.reload();
-    }
-  })
+
+  //Example Bar chart at opening
+  var selectedPosition = "2";
+  var barSpacing = "2";
+  var title = "Example";
+  var titleSize = "4";
+  var label1 = "Type A";
+  var label2 = "Type B";
+  var label3 = "Type C";
+
+  var data = [
+    {Value: 10, Value2: 20, Value3: 30, Label: "First"},
+    {Value: 5, Value2: 15, Value3: 20, Label: "Second"},
+    {Value: 4, Value2: 8, Value3: 16, Label: "Third"},
+    {Value: 1, Value2: 15, Value3: 2, Label: "Forth"},
+    {Value: 11, Value2: 22, Value3: 7, Label: "Fifth"}
+  ];
+  var options = {title: title, titleSize: titleSize, height: "400px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
+  var barChart = drawBarChart(data, options, $("#barChart"));
+
+});
+
+//Start Over Button
+$("#startOver").click(function(){
+  if(confirm("Start Over?")){
+    location.reload();
+  }
 });
 
 //Select numbers button
@@ -104,6 +125,7 @@ $("#createVal").click(function(){
     var options = {title: title, titleSize: titleSize, height: "400px", width: "200px", position: selectedPosition, barSpacing: barSpacing, label1: label1, label2: label2, label3: label3};
     var barChart = drawBarChart(data, options, $("#barChart"));
   });
+});
 
   //Bar chart is designed
   function drawBarChart(data, options, element) {
@@ -290,7 +312,6 @@ $("#createVal").click(function(){
           //DOM insertion - Title Colors
           $("#titleDiv").append("Title Colour: ");
           $("#titleDiv").append("<br>");
-          $("#titleDiv").append("<br>");
           $("#titleDiv").append(colorWellTitle);
         }
       }
@@ -312,12 +333,9 @@ $("#createVal").click(function(){
               p.style.color = event.target.value;
             });
           }
-          //Title for Label Color Picker
-          var nameLabelLabel = document.createTextNode("Label Colour: ");
 
           //DOM insertion - Label Colors
-          $("#colorLabels").append(nameLabelLabel);
-          $("#colorLabels").append("<br>");
+          $("#colorLabels").append("Label Colour: ");
           $("#colorLabels").append("<br>");
           $("#colorLabels").append(colorWellLabels);
         }
@@ -328,4 +346,3 @@ $("#createVal").click(function(){
     element.append(table);
     return element;
   }
-});
